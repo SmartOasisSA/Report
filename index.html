@@ -1,0 +1,989 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>沙特阿拉伯房地产市场回顾 | 2025年第三季度</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Google Fonts (Noto Sans SC) -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+    <!-- Tailwind Config for Custom Palette -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Noto Sans SC"', 'sans-serif'],
+                    },
+                    colors: {
+                        'sand-50': '#f9f7f2',
+                        'sand-100': '#f0eadd',
+                        'sand-200': '#e2d6c0',
+                        'saudi-green': '#1e5f44',
+                        'saudi-green-light': '#2d8a63',
+                        'gold-accent': '#c5a065',
+                        'slate-dark': '#334155',
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.5s ease-out',
+                        'slide-in-right': 'slideInRight 0.3s ease-out',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0', transform: 'translateY(10px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        slideInRight: {
+                            '0%': { transform: 'translateX(100%)' },
+                            '100%': { transform: 'translateX(0)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f0eadd; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #c5a065; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #1e5f44; 
+        }
+
+        /* Chart Container Strict Styling */
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 100%; /* Constraints managed by grid/parent */
+            height: 300px;
+            max-height: 350px;
+        }
+        
+        @media (min-width: 1024px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+
+        /* Transitions */
+        .transition-all-300 {
+            transition: all 0.3s ease-in-out;
+        }
+
+        /* AI Chat Bubble Styles */
+        .chat-bubble {
+            max-width: 80%;
+            padding: 10px 14px;
+            border-radius: 12px;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            position: relative;
+        }
+        .chat-bubble.user {
+            background-color: #1e5f44;
+            color: white;
+            align-self: flex-end;
+            border-bottom-right-radius: 2px;
+        }
+        .chat-bubble.ai {
+            background-color: #f0eadd;
+            color: #334155;
+            align-self: flex-start;
+            border-bottom-left-radius: 2px;
+            border: 1px solid #e2d6c0;
+        }
+        .typing-dot {
+            display: inline-block;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background-color: #555;
+            animation: typing 1.4s infinite ease-in-out both;
+            margin: 0 2px;
+        }
+        .typing-dot:nth-child(1) { animation-delay: -0.32s; }
+        .typing-dot:nth-child(2) { animation-delay: -0.16s; }
+        
+        @keyframes typing {
+            0%, 80%, 100% { transform: scale(0); }
+            40% { transform: scale(1); }
+        }
+    </style>
+
+    <!-- Chosen Palette: Desert Modern (Sand, Saudi Green, Gold Accent) -->
+    <!-- Application Structure Plan: Dashboard layout with Sidebar navigation. Added AI Assistant floating panel. -->
+    <!-- Visualization & Content Choices: Chart.js for data. Gemini API for text processing. NO SVG. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+
+</head>
+<body class="bg-sand-50 text-slate-dark font-sans antialiased overflow-x-hidden relative">
+
+    <!-- Mobile Nav Toggle -->
+    <div class="lg:hidden bg-saudi-green text-white p-4 flex justify-between items-center shadow-md fixed w-full z-50 top-0">
+        <h1 class="text-lg font-bold">沙特房地产市场 Q3 2025</h1>
+        <button id="menu-btn" class="text-white focus:outline-none text-2xl">☰</button>
+    </div>
+
+    <div class="flex min-h-screen pt-16 lg:pt-0 relative">
+        
+        <!-- Sidebar Navigation -->
+        <aside id="sidebar" class="bg-saudi-green text-white w-64 space-y-6 py-7 px-2 absolute inset-y-0 left-0 transform -translate-x-full lg:relative lg:translate-x-0 transition duration-200 ease-in-out z-40 h-full fixed lg:fixed flex flex-col">
+            <div class="px-4 mb-4">
+                <!-- Changed font size from text-2xl to text-lg to fit on one line -->
+                <h2 class="text-lg font-bold tracking-wide">Smart Oasis 研究部</h2>
+                <p class="text-xs text-sand-200 mt-1">沙特市场回顾 | 2025年10月</p>
+            </div>
+
+            <nav class="flex-1 space-y-1">
+                <a href="#" onclick="showSection('overview')" class="nav-item block py-2.5 px-4 rounded transition duration-200 hover:bg-saudi-green-light hover:text-white bg-saudi-green-light font-bold" data-target="overview">
+                    📊 宏观概览 & 政策
+                </a>
+                <a href="#" onclick="showSection('office')" class="nav-item block py-2.5 px-4 rounded transition duration-200 hover:bg-saudi-green-light hover:text-white" data-target="office">
+                    🏢 写字楼市场
+                </a>
+                <a href="#" onclick="showSection('residential')" class="nav-item block py-2.5 px-4 rounded transition duration-200 hover:bg-saudi-green-light hover:text-white" data-target="residential">
+                    🏠 住宅市场
+                </a>
+                <a href="#" onclick="showSection('retail-hospitality')" class="nav-item block py-2.5 px-4 rounded transition duration-200 hover:bg-saudi-green-light hover:text-white" data-target="retail-hospitality">
+                    🛍️ 零售与酒店
+                </a>
+                <a href="#" onclick="showSection('industrial')" class="nav-item block py-2.5 px-4 rounded transition duration-200 hover:bg-saudi-green-light hover:text-white" data-target="industrial">
+                    🏭 工业与物流
+                </a>
+            </nav>
+
+            <!-- AI Button in Sidebar -->
+            <div class="px-4 pb-4 mt-auto">
+                <button onclick="toggleAIChat()" class="w-full py-3 px-4 bg-gradient-to-r from-gold-accent to-yellow-600 text-white rounded-lg shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all flex items-center justify-center space-x-2 font-bold group">
+                    <span class="text-xl group-hover:animate-pulse">✨</span>
+                    <span>智能市场助手</span>
+                </button>
+            </div>
+
+            <div class="p-4 text-xs text-sand-200">
+                <p>&copy; 2025 Smart Oasis Inc.</p>
+                <p>数据来源: CBRE/GASTAT</p>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 p-4 lg:p-10 w-full lg:ml-0 transition-all-300">
+            
+            <!-- Dynamic Section Content -->
+            
+            <!-- SECTION 1: OVERVIEW & POLICY -->
+            <div id="overview" class="section-content block animate-fade-in">
+                <!-- 1. 首页说明 (Introduction) -->
+                <div class="mb-8 bg-white p-6 rounded-lg shadow-sm border-l-8 border-saudi-green">
+                    <h2 class="text-xl font-bold text-slate-800 mb-2">关于本交互式仪表盘</h2>
+                    <p class="text-sm text-gray-600 leading-relaxed">
+                        本网页基于 CBRE（世邦魏理仕）发布的《沙特阿拉伯 2025年第三季度房地产市场回顾》报告构建。
+                        它旨在通过动态图表和交互式分析，为投资者、开发商及行业利益相关者提供关于沙特市场宏观经济指标、重大政策变革以及各大细分市场（写字楼、住宅、零售、工业）表现的即时洞察。
+                        您可以点击侧边栏导航切换不同板块，或使用右下角的 AI 助手查询具体数据。
+                    </p>
+                </div>
+
+                <header class="mb-8 border-b-2 border-gold-accent pb-4 flex flex-col md:flex-row md:items-end justify-between">
+                    <div class="w-full">
+                        <h1 class="text-3xl lg:text-4xl font-bold text-saudi-green">宏观经济与政策格局</h1>
+                        <p class="mt-4 text-base md:text-lg text-slate-600 leading-relaxed">
+                            非石油经济展现出强劲的韧性，预计全年增长4.2%；与此同时，政府出台了包括所有权法案修订和租金管控在内的一系列重大监管变革，旨在长期重塑市场结构并吸引外资。这些政策与经济基本面共同作用，为房地产市场的长期可持续发展奠定了坚实基础。
+                        </p>
+                    </div>
+                </header>
+
+                <!-- 2. 宏观经济数据 (Expanded KPI Grid) -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+                    <!-- GDP -->
+                    <div class="bg-white p-6 rounded-lg shadow-md border-t-4 border-saudi-green transform hover:scale-105 transition-transform duration-300">
+                        <h3 class="text-sm font-semibold text-gray-500 uppercase">2025 Q2 实际GDP增长</h3>
+                        <p class="text-4xl font-bold text-saudi-green mt-2">3.9%</p>
+                        <p class="text-xs text-gray-400 mt-1">Q1 为 3.4%</p>
+                    </div>
+                    <!-- RevPAR -->
+                    <div class="bg-white p-6 rounded-lg shadow-md border-t-4 border-gold-accent transform hover:scale-105 transition-transform duration-300">
+                        <h3 class="text-sm font-semibold text-gray-500 uppercase">酒店 RevPAR (YTD)</h3>
+                        <p class="text-4xl font-bold text-gold-accent mt-2">1.3%</p>
+                        <p class="text-xs text-gray-400 mt-1">截至2025年8月</p>
+                    </div>
+                    <!-- Inflation -->
+                    <div class="bg-white p-6 rounded-lg shadow-md border-t-4 border-slate-500 transform hover:scale-105 transition-transform duration-300">
+                        <h3 class="text-sm font-semibold text-gray-500 uppercase">通胀率 (8月)</h3>
+                        <p class="text-4xl font-bold text-slate-700 mt-2">2.3%</p>
+                        <p class="text-xs text-gray-400 mt-1">主要受租金价格推动</p>
+                    </div>
+                    <!-- Office Rents -->
+                    <div class="bg-white p-6 rounded-lg shadow-md border-t-4 border-saudi-green transform hover:scale-105 transition-transform duration-300">
+                        <h3 class="text-sm font-semibold text-gray-500 uppercase">利雅得写字楼租金</h3>
+                        <p class="text-4xl font-bold text-saudi-green mt-2">+15%</p>
+                        <p class="text-xs text-gray-400 mt-1">同比截至 2025 Q3</p>
+                    </div>
+                    <!-- FDI -->
+                    <div class="bg-white p-6 rounded-lg shadow-md border-t-4 border-gold-accent transform hover:scale-105 transition-transform duration-300">
+                        <h3 class="text-sm font-semibold text-gray-500 uppercase">净外国直接投资 (FDI)</h3>
+                        <p class="text-4xl font-bold text-gold-accent mt-2">+14.5%</p>
+                        <p class="text-xs text-gray-400 mt-1">达到 228亿 SAR (Q2)</p>
+                    </div>
+                    <!-- PMI -->
+                    <div class="bg-white p-6 rounded-lg shadow-md border-t-4 border-saudi-green transform hover:scale-105 transition-transform duration-300">
+                        <h3 class="text-sm font-semibold text-gray-500 uppercase">PMI 指数 (8月)</h3>
+                        <p class="text-4xl font-bold text-saudi-green mt-2">56.4</p>
+                        <p class="text-xs text-gray-400 mt-1">处于扩张区间</p>
+                    </div>
+                    <!-- Unemployment -->
+                    <div class="bg-white p-6 rounded-lg shadow-md border-t-4 border-slate-500 transform hover:scale-105 transition-transform duration-300">
+                        <h3 class="text-sm font-semibold text-gray-500 uppercase">失业率 (Q1)</h3>
+                        <p class="text-4xl font-bold text-slate-700 mt-2">2.8%</p>
+                        <p class="text-xs text-gray-400 mt-1">历史新低</p>
+                    </div>
+                    <!-- Non-Oil Forecast -->
+                    <div class="bg-white p-6 rounded-lg shadow-md border-t-4 border-gold-accent transform hover:scale-105 transition-transform duration-300">
+                        <h3 class="text-sm font-semibold text-gray-500 uppercase">非石油部门增长预测</h3>
+                        <p class="text-4xl font-bold text-gold-accent mt-2">~5%</p>
+                        <p class="text-xs text-gray-400 mt-1">2025 全年预测</p>
+                    </div>
+                </div>
+
+                <!-- Macro & Policy Layout (Updated to Stacked) -->
+                <div class="flex flex-col gap-8">
+                    <!-- Text Insight Card -->
+                    <div class="bg-white p-8 rounded-lg shadow-md border-l-4 border-saudi-green">
+                        <h3 class="text-2xl font-bold text-saudi-green mb-6">关键投资洞察：资本流向与财政健康</h3>
+                        <div class="prose prose-lg text-slate-600">
+                            <p class="text-lg leading-relaxed font-medium">
+                                “尽管FDI总流入量有所下降（同比-11.5%），但净FDI同比增长14.5%至228亿沙特里亚尔，主要原因是流出量大幅减少（-74.5%）。财政赤字收窄，随着降息预期，融资环境趋于利好。”
+                            </p>
+                        </div>
+                        <div class="mt-8 flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-4">
+                            <div class="flex-1 w-full bg-sand-50 p-4 rounded-lg">
+                                <span class="block text-sm text-gray-500 mb-1">净 FDI 增长</span>
+                                <span class="text-2xl font-bold text-saudi-green">+14.5%</span>
+                            </div>
+                            <div class="flex-1 w-full bg-sand-50 p-4 rounded-lg">
+                                <span class="block text-sm text-gray-500 mb-1">资本流出减少</span>
+                                <span class="text-2xl font-bold text-gold-accent">-74.5%</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 3. 监管与政策变革 (Enriched Content) -->
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <h3 class="text-xl font-bold text-saudi-green mb-4">监管与政策变革 (点击查看)</h3>
+                        <div class="space-y-4" id="policy-container">
+                            <!-- Policy Item 1 -->
+                            <div class="border border-sand-200 rounded-lg overflow-hidden">
+                                <button class="w-full text-left p-4 bg-sand-50 hover:bg-sand-100 font-bold text-saudi-green flex justify-between items-center" onclick="togglePolicy('p1')">
+                                    <span>新所有权法 & WLT</span>
+                                    <span id="icon-p1">+</span>
+                                </button>
+                                <div id="p1" class="hidden p-4 text-sm text-gray-700 bg-white">
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                        <div>
+                                            <p class="mb-2 font-semibold text-gold-accent">主要目标</p>
+                                            <p class="mb-2">实现2030年吸引1000亿美元FDI的目标，并打击土地投机行为。</p>
+                                            <p class="mb-2 font-semibold text-gold-accent">关键措施</p>
+                                            <ul class="list-disc pl-4 space-y-1 mb-2">
+                                                <li><strong>非沙特人所有权法：</strong> 放宽外资购房限制。</li>
+                                                <li><strong>闲置土地税 (WLT) 扩张：</strong> 在利雅得指定新区域，对未开发土地实施 <strong>2.5% - 10%</strong> 的分级费率。</li>
+                                            </ul>
+                                        </div>
+                                        <div class="flex items-center">
+                                            <p class="text-sm text-gray-600 bg-gray-50 p-4 rounded border-l-2 border-saudi-green">
+                                                <strong>市场影响分析：</strong><br>
+                                                持有成本的显著增加预计将迫使土地所有者采取行动——要么出售，要么寻求合作开发。短期内，这将增加市场上的土地流动性；长期来看，这有助于平抑地价波动，使开发成本回归理性。
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Policy Item 2 -->
+                            <div class="border border-sand-200 rounded-lg overflow-hidden">
+                                <button class="w-full text-left p-4 bg-sand-50 hover:bg-sand-100 font-bold text-saudi-green flex justify-between items-center" onclick="togglePolicy('p2')">
+                                    <span>五年租金冻结</span>
+                                    <span id="icon-p2">+</span>
+                                </button>
+                                <div id="p2" class="hidden p-4 text-sm text-gray-700 bg-white">
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                        <div>
+                                            <p class="mb-2"><strong>实施范围：</strong> 利雅得市区范围内的所有商业与住宅租赁。</p>
+                                            <p class="mb-2 font-semibold text-gold-accent">核心规定</p>
+                                            <ul class="list-disc pl-4 space-y-1 mb-2">
+                                                <li>根据最后登记合同固定空置房产租金。</li>
+                                                <li>强制在 'Ejar' 平台登记所有合同以增加透明度。</li>
+                                                <li>将驱逐租户的情况严格限制在三种特定情形。</li>
+                                            </ul>
+                                        </div>
+                                        <div class="flex items-center">
+                                            <p class="text-sm text-gray-600 bg-gray-50 p-4 rounded border-l-2 border-saudi-green">
+                                                <strong>市场影响分析：</strong><br>
+                                                该政策旨在为家庭和小企业提供即时的成本确定性，防止租金投机。然而，硬币的另一面是，这可能在短期内抑制外国直接投资（FDI）的进入，增加新项目的承销难度，并可能在短期内削弱现有资产的估值。
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Policy Item 3 -->
+                            <div class="border border-sand-200 rounded-lg overflow-hidden">
+                                <button class="w-full text-left p-4 bg-sand-50 hover:bg-sand-100 font-bold text-saudi-green flex justify-between items-center" onclick="togglePolicy('p3')">
+                                    <span>Tawazoun 房地产平台</span>
+                                    <span id="icon-p3">+</span>
+                                </button>
+                                <div id="p3" class="hidden p-4 text-sm text-gray-700 bg-white">
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                        <div>
+                                            <p class="mb-2"><strong>发布机构：</strong> 利雅得皇家委员会 (RCRC)。</p>
+                                            <p class="mb-2"><strong>机制：</strong> 设定价格上限为 <strong>1500 SAR/sqm</strong>，远低于市场价。</p>
+                                            <p class="mb-2 font-semibold text-gold-accent">资格与限制</p>
+                                            <ul class="list-disc pl-4 space-y-1">
+                                                <li>仅限符合条件的沙特公民（如首次置业者）。</li>
+                                                <li>强制执行 <strong>10年内</strong> 禁止转售、转让或租赁。</li>
+                                                <li>目标每年提供 10,000 - 40,000 个已开发地块。</li>
+                                            </ul>
+                                        </div>
+                                        <div class="flex items-center">
+                                            <p class="text-sm text-gray-600 bg-gray-50 p-4 rounded border-l-2 border-saudi-green">
+                                                <strong>市场影响分析：</strong><br>
+                                                这是政府直接干预市场的有力举措，旨在解决住房供需缺口并提高可负担性，确保本地居民能以合理价格获得住房，同时严格的转售限制有效防止了投机套利。
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECTION 2: OFFICE MARKET -->
+            <div id="office" class="section-content hidden animate-fade-in">
+                <header class="mb-8 border-b-2 border-gold-accent pb-4">
+                    <h1 class="text-3xl lg:text-4xl font-bold text-saudi-green">写字楼市场</h1>
+                    <p class="mt-4 text-base md:text-lg text-slate-600 leading-relaxed">
+                        区域总部 (RHQ) 计划的持续推进为市场注入了强劲的结构性需求，导致利雅得优质办公空间供不应求，租金飙升，促使租户加速向高品质（Grade A/Prime）物业转移，市场呈现出显著的卖方市场特征。
+                    </p>
+                </header>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <!-- Main Insights -->
+                    <div class="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-saudi-green">
+                            <h3 class="text-lg font-bold mb-2">利雅得租金飙升</h3>
+                            <p class="text-3xl font-bold text-saudi-green">+15%</p>
+                            <p class="text-sm text-gray-500">同比平均涨幅 (2025 Q3)</p>
+                            <div class="mt-4 text-sm">
+                                <p><strong>优质租金:</strong> ~3,230 SAR/sqm</p>
+                                <p><strong>甲级租金:</strong> ~2,550 SAR/sqm</p>
+                            </div>
+                        </div>
+                        <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-gold-accent">
+                            <h3 class="text-lg font-bold mb-2">极度紧缺的供应</h3>
+                            <p class="text-3xl font-bold text-gold-accent">98%</p>
+                            <p class="text-sm text-gray-500">利雅得写字楼出租率</p>
+                            <p class="mt-4 text-sm text-gray-600">近乎零空置率迫使租户尽早启动预租赁策略。</p>
+                        </div>
+                        
+                        <!-- Demand Chart -->
+                        <div class="bg-white p-6 rounded-lg shadow-md col-span-1 md:col-span-2">
+                            <h3 class="text-xl font-bold text-saudi-green mb-4">利雅得写字楼需求构成 (按行业)</h3>
+                            <div class="flex flex-col md:flex-row items-center">
+                                <div class="chart-container md:w-1/2">
+                                    <canvas id="officeDemandChart"></canvas>
+                                </div>
+                                <div class="md:w-1/2 md:pl-8 text-sm text-gray-700 mt-4 md:mt-0">
+                                    <p class="mb-3"><strong>区域总部 (RHQ) 效应：</strong> Q2发放了34个新许可证，累计约634个。科技与金融行业主导需求。</p>
+                                    <ul class="list-disc pl-5 space-y-1">
+                                        <li>科技: 23%</li>
+                                        <li>金融服务: 23%</li>
+                                        <li>医疗保健: 15%</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Supply Pipeline Info -->
+                    <div class="bg-white p-6 rounded-lg shadow-md lg:col-span-1 bg-sand-50">
+                        <h3 class="text-xl font-bold text-saudi-green mb-4">未来供应展望</h3>
+                        <div class="space-y-6">
+                            <div>
+                                <h4 class="font-bold text-slate-700">2026-2027年供应量</h4>
+                                <p class="text-2xl font-bold text-gold-accent">~130万平方米</p>
+                                <p class="text-xs text-gray-500">75% 位于利雅得北部</p>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-slate-700">开发商构成</h4>
+                                <div class="w-full bg-gray-200 rounded-full h-4 mb-4 mt-2">
+                                    <div class="bg-saudi-green h-4 rounded-full" style="width: 80%"></div>
+                                </div>
+                                <div class="flex justify-between text-xs font-medium">
+                                    <span>私人开发商 (80%)</span>
+                                    <span>大型项目 (20%)</span>
+                                </div>
+                            </div>
+                            <div class="p-4 bg-white rounded border border-sand-200">
+                                <h4 class="font-bold text-saudi-green">KAFD 扩建</h4>
+                                <p class="text-sm mt-1">阿卜杜拉国王金融区计划将现有面积扩大一倍，目标日均访客40,000人，并重启单轨系统。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECTION 3: RESIDENTIAL -->
+            <div id="residential" class="section-content hidden animate-fade-in">
+                <header class="mb-8 border-b-2 border-gold-accent pb-4">
+                    <h1 class="text-3xl lg:text-4xl font-bold text-saudi-green">住宅市场</h1>
+                    <p class="mt-4 text-base md:text-lg text-slate-600 leading-relaxed">
+                        住宅交易活动在第三季度显著回暖，交易量环比增长近18%；然而，利雅得别墅价格的双位数增长引发了对可负担性的关注，促使政府出台价格上限和租金冻结等干预措施，市场呈现出价格分化与政策调控并存的复杂局面。
+                    </p>
+                </header>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <!-- Price Analysis Chart -->
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <h3 class="text-xl font-bold text-saudi-green mb-4">价格同比变化：利雅得 vs 吉达</h3>
+                        <div class="chart-container">
+                            <canvas id="residentialPriceChart"></canvas>
+                        </div>
+                        <p class="text-sm text-gray-500 mt-4">
+                            利雅得房价普涨，尤其是别墅 (+11.6%)。吉达市场分化，公寓价格微跌 (-1.1%)，显示出更高的价格敏感度。
+                        </p>
+                    </div>
+
+                    <!-- 4. 住宅市场 (Enriched Content) -->
+                    <div class="space-y-6">
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="bg-white p-5 rounded-lg shadow-md text-center">
+                                <p class="text-gray-500 text-sm">季度交易总量</p>
+                                <p class="text-2xl font-bold text-saudi-green">+17.9%</p>
+                                <p class="text-xs text-gray-400">环比增长</p>
+                            </div>
+                            <div class="bg-white p-5 rounded-lg shadow-md text-center">
+                                <p class="text-gray-500 text-sm">Q3 交易总值</p>
+                                <p class="text-2xl font-bold text-gold-accent">77亿 SAR</p>
+                                <p class="text-xs text-gray-400">住宅土地交易最活跃 (~5000笔)</p>
+                            </div>
+                        </div>
+
+                        <div class="bg-white p-6 rounded-lg shadow-md border-t-2 border-saudi-green">
+                            <h3 class="text-lg font-bold text-saudi-green mb-4">市场动态与重点项目</h3>
+                            <div class="space-y-4">
+                                <div class="border-b border-sand-100 pb-3">
+                                    <h4 class="font-bold text-slate-700 text-sm">主要开发商动向</h4>
+                                    <p class="text-sm text-gray-600 mt-1">
+                                        <span class="font-semibold">Dar Al Majdiah：</span> 签署价值 4.536亿 SAR 合同，在利雅得 (Adeem Al Fursan) 和吉达 (Khayala 1) 建设超过 1,000 个单元。
+                                        <br>
+                                        <span class="font-semibold">ROSHN Group：</span> 在吉达北部 ALAROUS 社区限量发布新房。
+                                    </p>
+                                </div>
+                                <div class="border-b border-sand-100 pb-3">
+                                    <h4 class="font-bold text-slate-700 text-sm">高端与外资市场</h4>
+                                    <p class="text-sm text-gray-600 mt-1">
+                                        <span class="font-semibold">Emaar EEC：</span> 与 Al Tahaluf 合作开发 340 个豪华地块，瞄准高端外国买家 (2026+)。
+                                        <br>
+                                        <span class="font-semibold">Diriyah：</span> 推出 The Chedi Residences，标志着向品牌服务式住宅的转变。
+                                    </p>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-slate-700 text-sm">宏观背景</h4>
+                                    <p class="text-sm text-gray-600 mt-1">
+                                        为实现 2030 愿景住房目标，政府正积极调动资本（寻求100亿美元主权贷款）以维持发展势头，并在年底前交付 5,000 个新单元。
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECTION 4: RETAIL & HOSPITALITY -->
+            <div id="retail-hospitality" class="section-content hidden animate-fade-in">
+                <header class="mb-8 border-b-2 border-gold-accent pb-4">
+                    <h1 class="text-3xl lg:text-4xl font-bold text-saudi-green">零售与酒店</h1>
+                    <p class="mt-4 text-base md:text-lg text-slate-600 leading-relaxed">
+                        零售市场正加速向体验式消费转型以应对主要城市的供应洪峰；与此同时，旅游业的关键指标保持强劲增长，本土化奢华酒店品牌与红海等超大型项目的落地正在重塑沙特的全球旅游形象。
+                    </p>
+                </header>
+
+                <!-- Tabs -->
+                <div class="flex space-x-4 mb-6 border-b border-sand-200">
+                    <button class="py-2 px-4 font-bold text-saudi-green border-b-2 border-saudi-green focus:outline-none" onclick="openSubTab(event, 'retail')">零售市场</button>
+                    <button class="py-2 px-4 font-bold text-gray-500 hover:text-saudi-green focus:outline-none" onclick="openSubTab(event, 'hospitality')">酒店与旅游</button>
+                </div>
+
+                <!-- Retail Content -->
+                <div id="retail" class="sub-tab-content block">
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                        <div class="bg-white p-6 rounded-lg shadow-md lg:col-span-2">
+                            <h3 class="text-xl font-bold text-saudi-green mb-4">利雅得零售供应管线 (2025-2027+)</h3>
+                            <div class="chart-container">
+                                <canvas id="retailSupplyChart"></canvas>
+                            </div>
+                            <p class="text-sm mt-4 text-gray-600">未来五年将交付约80万平方米新空间，80%集中在利雅得北部。大规模供应（如Avenues Mall）将增加竞争压力。</p>
+                        </div>
+                        <div class="bg-sand-50 p-6 rounded-lg shadow-inner">
+                            <h3 class="text-lg font-bold text-saudi-green mb-3">关键趋势：体验优先</h3>
+                            <p class="text-sm text-gray-700 mb-4">市场正从传统零售向综合生活方式转变。</p>
+                            <div class="bg-white p-4 rounded shadow mb-4">
+                                <h4 class="font-bold text-slate-800">Diriyah Square 合作</h4>
+                                <p class="text-xs text-gray-500 mt-1">Majid Al Futtaim 与 Diriyah Company 合作，引入VOX影院及7个全球生活方式品牌，融合现代零售与文化遗产。</p>
+                            </div>
+                            <div class="flex items-center justify-between text-sm">
+                                <span class="font-semibold">零售销量CAGR (25-27):</span>
+                                <span class="font-bold text-gold-accent">4.4%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hospitality Content -->
+                <div id="hospitality" class="sub-tab-content hidden">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                        <div class="bg-white p-4 rounded shadow border-t-2 border-saudi-green">
+                            <h4 class="text-xs text-gray-500 uppercase">全国 RevPAR (同比)</h4>
+                            <p class="text-2xl font-bold text-saudi-green">+10.0%</p>
+                        </div>
+                        <div class="bg-white p-4 rounded shadow border-t-2 border-red-400">
+                            <h4 class="text-xs text-gray-500 uppercase">利雅得 RevPAR (YTD)</h4>
+                            <p class="text-2xl font-bold text-red-500">-9.2%</p>
+                            <p class="text-xs text-gray-400">受新入市竞争影响</p>
+                        </div>
+                        <div class="bg-white p-4 rounded shadow border-t-2 border-saudi-green">
+                            <h4 class="text-xs text-gray-500 uppercase">Q1 国际游客支出</h4>
+                            <p class="text-2xl font-bold text-gold-accent">494亿 SAR</p>
+                        </div>
+                        <div class="bg-white p-4 rounded shadow border-t-2 border-saudi-green">
+                            <h4 class="text-xs text-gray-500 uppercase">2030 目标</h4>
+                            <p class="text-2xl font-bold text-saudi-green">36.2万</p>
+                            <p class="text-xs text-gray-400">新增酒店客房</p>
+                        </div>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <h3 class="text-xl font-bold text-saudi-green mb-4">主要动态</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                            <div>
+                                <h4 class="font-bold text-slate-700 mb-2">本土化奢华</h4>
+                                <p class="text-sm text-gray-600">PIF支持的Adeera Hospitality将在Qiddiya City运营，并推出三个本土品牌：Alia (奢华), Sama (五星), Noor (中端)。</p>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-slate-700 mb-2">连通性提升</h4>
+                                <p class="text-sm text-gray-600">红海国际机场 (RSI) 全面运营，卡塔尔航空开通直飞。AMAALA预计2025年迎客。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECTION 5: INDUSTRIAL -->
+            <div id="industrial" class="section-content hidden animate-fade-in">
+                <header class="mb-8 border-b-2 border-gold-accent pb-4">
+                    <h1 class="text-3xl lg:text-4xl font-bold text-saudi-green">工业与物流</h1>
+                    <p class="mt-4 text-base md:text-lg text-slate-600 leading-relaxed">
+                        受'国家工业发展和物流计划' (NIDLP) 驱动，制造业产出强劲，对现代化物流设施的需求激增，导致利雅得核心工业区的租金出现爆发式增长，物流资产溢价效应显著。
+                    </p>
+                </header>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <!-- Charts -->
+                    <div class="bg-white p-6 rounded-lg shadow-md lg:col-span-2">
+                        <h3 class="text-xl font-bold text-saudi-green mb-4">主要工业区租金同比增长 (2025 Q3)</h3>
+                        <div class="chart-container">
+                            <canvas id="industrialRentChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Key Stats -->
+                    <div class="space-y-6">
+                        <div class="bg-saudi-green text-white p-6 rounded-lg shadow-md">
+                            <h3 class="font-bold text-lg mb-2">工业生产指数 (IPI)</h3>
+                            <p class="text-4xl font-bold">+7.1%</p>
+                            <p class="text-sm opacity-80 mt-1">2025年8月同比</p>
+                        </div>
+                        <div class="bg-white p-6 rounded-lg shadow-md border border-sand-200">
+                            <h3 class="font-bold text-lg text-saudi-green mb-3">建设热潮</h3>
+                            <p class="text-sm text-gray-700 mb-2">已承诺项目中超过 <strong>1160亿美元</strong> 用于建设，直接支撑了物流设施需求。</p>
+                            <div class="text-xs text-gray-500 pt-2 border-t border-gray-100">
+                                <p>7月水泥销量: +8.4%</p>
+                                <p>新工厂投产 (7月): 133家</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- AI Chat Widget (Hidden by default) -->
+    <div id="ai-chat-panel" class="fixed top-0 right-0 h-full w-full md:w-96 bg-white shadow-2xl transform translate-x-full transition-transform duration-300 z-50 flex flex-col border-l border-sand-200">
+        <!-- Header -->
+        <div class="bg-saudi-green p-4 flex justify-between items-center text-white">
+            <div class="flex items-center space-x-2">
+                <span class="text-2xl">✨</span>
+                <div>
+                    <h3 class="font-bold">智能市场助手</h3>
+                    <p class="text-xs text-saudi-green-light opacity-90">Powered by Gemini 2.5</p>
+                </div>
+            </div>
+            <button onclick="toggleAIChat()" class="hover:bg-saudi-green-light p-1 rounded transition">✕</button>
+        </div>
+        
+        <!-- Chat Area -->
+        <div id="chat-messages" class="flex-1 overflow-y-auto p-4 bg-sand-50 flex flex-col space-y-3">
+            <div class="chat-bubble ai">
+                你好！我是您的沙特房地产市场智能助手。
+                <br><br>
+                我已经阅读了整份 Q3 报告，您可以问我关于<strong>写字楼租金、住宅价格、新政策影响</strong>等任何问题。
+            </div>
+            
+            <!-- Suggested Questions -->
+            <div class="flex flex-wrap gap-2 mt-2">
+                <button onclick="askQuestion('2025年利雅得写字楼市场的趋势是什么？')" class="text-xs bg-white border border-sand-200 px-3 py-1.5 rounded-full hover:border-saudi-green hover:text-saudi-green transition">🏢 写字楼趋势</button>
+                <button onclick="askQuestion('住宅市场的风险和机会有哪些？')" class="text-xs bg-white border border-sand-200 px-3 py-1.5 rounded-full hover:border-saudi-green hover:text-saudi-green transition">🏠 住宅风险</button>
+                <button onclick="askQuestion('新出台的租金冻结政策具体内容是什么？')" class="text-xs bg-white border border-sand-200 px-3 py-1.5 rounded-full hover:border-saudi-green hover:text-saudi-green transition">📜 租金冻结政策</button>
+            </div>
+        </div>
+
+        <!-- Input Area -->
+        <div class="p-4 bg-white border-t border-gray-200">
+            <div class="flex space-x-2">
+                <input type="text" id="user-input" class="flex-1 border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:border-saudi-green" placeholder="输入问题..." onkeypress="handleKeyPress(event)">
+                <button onclick="sendMessage()" class="bg-saudi-green text-white px-4 py-2 rounded-lg hover:bg-saudi-green-light transition font-bold">发送</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Overlay -->
+    <div id="chat-overlay" onclick="toggleAIChat()" class="fixed inset-0 bg-black bg-opacity-30 z-40 hidden transition-opacity duration-300"></div>
+
+    <!-- JavaScript Logic -->
+    <script>
+        // --- Gemini API Logic ---
+        const apiKey = ""; // Set automatically by environment
+        
+        // Report Context Data (Hardcoded for Demo to simulate "reading" the DOM)
+        const reportContext = `
+            报告标题：沙特阿拉伯房地产市场回顾 2025年第三季度 (Q3)
+            机构：CBRE 研究部
+            
+            宏观经济：
+            - 2025 Q2 实际GDP增长 3.9%，非石油经济强劲。全年预测上调至 4.2%。
+            - 8月通胀率 2.3%，受租金上涨推动。
+            - PMI 56.4 (8月)，扩张区间。
+            - 失业率 (Q1): 2.8% (历史新低)。
+            - 净FDI: +14.5% (228亿 SAR)，流出减少 74.5%。
+            
+            政策：
+            - 新《非沙特人房地产所有权法》：旨在吸引1000亿美元FDI。
+            - 闲置土地税 (WLT) 扩大至利雅得新区域，费率2.5%-10%。
+            - 五年租金冻结：利雅得商业与住宅，旨在遏制价格飙升，可能短期抑制FDI。
+            - Tawazoun 平台：设定房价上限 1500 SAR/sqm，仅限沙特公民，禁止10年转售。
+            
+            写字楼市场：
+            - 利雅得租金同比飙升 15%。
+            - 出租率 98%，供应极度紧缺。
+            - RHQ计划发放34个新许可证 (Q2)，累计634个。
+            - 需求主导：科技(23%)、金融(23%)。
+            - 未来供应：2026-2027年约130万平米，75%在利雅得北部。
+            
+            住宅市场：
+            - 利雅得房价：别墅+11.6%，公寓+6.3%。
+            - 吉达房价：别墅+3.2%，公寓-1.1%。
+            - 交易量环比增长 17.9%，总值 77亿 SAR。
+            - Dar Al Majdiah 签署 4.5亿 SAR 合同。
+            - Emaar EEC 针对外国买家开发 KAEC 豪华地块。
+            - 租金冻结政策影响：可能导致开发商重新评估项目回报。
+            
+            零售与酒店：
+            - 零售：利雅得未来5年新增80万平米。趋势：体验式消费 (Diriyah Square + VOX)。
+            - 酒店：全国RevPAR +10%。利雅得RevPAR -9.2% (受供应影响)。
+            - 本土化：PIF支持 Adeera Hospitality 运营 Qiddiya City 酒店 (Alia, Sama, Noor品牌)。
+            
+            工业：
+            - 利雅得 Al Faisaliyah 租金同比飙升 27.8%。
+            - 工业生产指数 (IPI) +7.1%。
+            - 1160亿美元用于建设项目，支撑物流需求。
+        `;
+
+        async function callGemini(userQuery) {
+            const systemPrompt = `
+                你是一位沙特阿拉伯房地产市场专家，效力于 CBRE。
+                基于以下报告数据回答用户问题。如果答案不在报告中，请诚实告知。
+                保持回答专业、简洁、有洞察力。使用中文回答。
+                
+                报告数据：
+                ${reportContext}
+            `;
+
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+            
+            const payload = {
+                contents: [{ parts: [{ text: userQuery }] }],
+                systemInstruction: { parts: [{ text: systemPrompt }] }
+            };
+
+            try {
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!response.ok) throw new Error('API Error');
+
+                const data = await response.json();
+                return data.candidates[0].content.parts[0].text;
+            } catch (error) {
+                console.error("Gemini Error:", error);
+                // Retry logic could go here, for now return simple error
+                return "抱歉，我现在无法连接到服务器。请稍后再试。";
+            }
+        }
+
+        // --- Chat UI Logic ---
+        function toggleAIChat() {
+            const panel = document.getElementById('ai-chat-panel');
+            const overlay = document.getElementById('chat-overlay');
+            
+            if (panel.classList.contains('translate-x-full')) {
+                panel.classList.remove('translate-x-full');
+                overlay.classList.remove('hidden');
+                setTimeout(() => overlay.classList.remove('opacity-0'), 10);
+            } else {
+                panel.classList.add('translate-x-full');
+                overlay.classList.add('opacity-0');
+                setTimeout(() => overlay.classList.add('hidden'), 300);
+            }
+        }
+
+        function appendMessage(text, sender) {
+            const chatBox = document.getElementById('chat-messages');
+            const bubble = document.createElement('div');
+            bubble.className = `chat-bubble ${sender} animate-fade-in`;
+            
+            // Basic formatting for AI response
+            if (sender === 'ai') {
+                // Convert simple bullets to HTML lists roughly
+                let formattedText = text.replace(/\n/g, '<br>');
+                formattedText = formattedText.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+                bubble.innerHTML = formattedText;
+            } else {
+                bubble.textContent = text;
+            }
+            
+            chatBox.appendChild(bubble);
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        function appendLoading() {
+            const chatBox = document.getElementById('chat-messages');
+            const bubble = document.createElement('div');
+            bubble.id = 'loading-bubble';
+            bubble.className = 'chat-bubble ai';
+            bubble.innerHTML = '<div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div>';
+            chatBox.appendChild(bubble);
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        function removeLoading() {
+            const bubble = document.getElementById('loading-bubble');
+            if (bubble) bubble.remove();
+        }
+
+        async function sendMessage() {
+            const input = document.getElementById('user-input');
+            const text = input.value.trim();
+            if (!text) return;
+
+            // 1. User Message
+            appendMessage(text, 'user');
+            input.value = '';
+
+            // 2. Loading State
+            appendLoading();
+
+            // 3. Call AI
+            const response = await callGemini(text);
+
+            // 4. AI Message
+            removeLoading();
+            appendMessage(response, 'ai');
+        }
+        
+        function askQuestion(question) {
+            document.getElementById('user-input').value = question;
+            sendMessage();
+        }
+
+        function handleKeyPress(e) {
+            if (e.key === 'Enter') sendMessage();
+        }
+
+        // --- Navigation Logic (Existing) ---
+        function showSection(sectionId) {
+            document.querySelectorAll('.section-content').forEach(el => {
+                el.classList.add('hidden');
+                el.classList.remove('block');
+            });
+            const target = document.getElementById(sectionId);
+            target.classList.remove('hidden');
+            target.classList.add('block');
+
+            document.querySelectorAll('.nav-item').forEach(el => {
+                if(el.dataset.target === sectionId) {
+                    el.classList.add('bg-saudi-green-light', 'font-bold');
+                } else {
+                    el.classList.remove('bg-saudi-green-light', 'font-bold');
+                }
+            });
+
+            const sidebar = document.getElementById('sidebar');
+            if(window.innerWidth < 1024) {
+                 sidebar.classList.add('-translate-x-full');
+            }
+        }
+
+        document.getElementById('menu-btn').addEventListener('click', () => {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('-translate-x-full');
+        });
+
+        function togglePolicy(id) {
+            const content = document.getElementById(id);
+            const icon = document.getElementById('icon-' + id);
+            
+            if (content.classList.contains('hidden')) {
+                content.classList.remove('hidden');
+                icon.innerText = '-';
+            } else {
+                content.classList.add('hidden');
+                icon.innerText = '+';
+            }
+        }
+
+        function openSubTab(evt, tabName) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("sub-tab-content");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            tablinks = evt.currentTarget.parentNode.children;
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].classList.remove("border-b-2", "border-saudi-green", "text-saudi-green");
+                tablinks[i].classList.add("text-gray-500");
+            }
+            document.getElementById(tabName).style.display = "block";
+            evt.currentTarget.classList.add("border-b-2", "border-saudi-green", "text-saudi-green");
+            evt.currentTarget.classList.remove("text-gray-500");
+        }
+
+        // --- Chart.js Initialization ---
+        document.addEventListener('DOMContentLoaded', function() {
+            
+            Chart.defaults.font.family = "'Noto Sans SC', sans-serif";
+            Chart.defaults.color = '#334155';
+            
+            // 2. Office Demand Chart
+            const ctxOffice = document.getElementById('officeDemandChart').getContext('2d');
+            new Chart(ctxOffice, {
+                type: 'doughnut',
+                data: {
+                    labels: ['科技', '金融服务', '医疗保健', '其他 (消费品/工业等)'],
+                    datasets: [{
+                        data: [23, 23, 15, 39],
+                        backgroundColor: ['#1e5f44', '#c5a065', '#2d8a63', '#e2d6c0'],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { position: 'bottom' } }
+                }
+            });
+
+            // 3. Residential Price Chart
+            const ctxResi = document.getElementById('residentialPriceChart').getContext('2d');
+            new Chart(ctxResi, {
+                type: 'bar',
+                data: {
+                    labels: ['利雅得', '吉达'],
+                    datasets: [
+                        { label: '别墅价格同比', data: [11.6, 3.2], backgroundColor: '#1e5f44' },
+                        { label: '公寓价格同比', data: [6.3, -1.1], backgroundColor: '#c5a065' }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: { y: { beginAtZero: true, grid: { color: '#f0eadd' } } }
+                }
+            });
+
+            // 4. Retail Supply Chart
+            const ctxRetail = document.getElementById('retailSupplyChart').getContext('2d');
+            new Chart(ctxRetail, {
+                type: 'bar',
+                data: {
+                    labels: ['2025 (年底)', '2026', '2027'],
+                    datasets: [{
+                        label: '新增供应量 (GLA sqm)',
+                        data: [100000, 120000, 460000],
+                        backgroundColor: '#2d8a63'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: { y: { beginAtZero: true } },
+                    plugins: {
+                        tooltip: {
+                            callbacks: { label: function(context) { return context.parsed.y.toLocaleString() + ' sqm'; } }
+                        }
+                    }
+                }
+            });
+
+            // 5. Industrial Rent Chart
+            const ctxInd = document.getElementById('industrialRentChart').getContext('2d');
+            new Chart(ctxInd, {
+                type: 'bar',
+                indexAxis: 'y',
+                data: {
+                    labels: ['利雅得 Al Faisaliyah', '利雅得东部', '利雅得南部', '吉达东部', '吉达南部'],
+                    datasets: [{
+                        label: '租金同比增长 (%)',
+                        data: [27.8, 18.1, 17.1, 9.0, 8.6],
+                        backgroundColor: (ctx) => {
+                            const val = ctx.raw;
+                            return val > 20 ? '#1e5f44' : (val > 10 ? '#2d8a63' : '#c5a065');
+                        }
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: { x: { beginAtZero: true } }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
