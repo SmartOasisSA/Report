@@ -250,22 +250,22 @@
                                     <h4 class="font-bold text-slate-800 mb-4 text-base border-l-4 border-gold-accent pl-3">核心逻辑差异</h4>
                                     <p class="mb-4 text-slate-600">沙特行政体系没有中国严格的“省厅-市局-县局”垂直管理体系，而是呈现<strong>“中央部委决策 + 强力总局监管 + 地区市政署执行”</strong>的扁平化格局。</p>
                                     <ul class="space-y-4 text-slate-600">
-                                        <li class="flex flex-col sm:flex-row sm:gap-4">
-                                            <span class="font-bold text-saudi-green min-w-[140px]">决策层（Ministry / 部）:</span>
+                                        <li class="flex items-start gap-4">
+                                            <span class="font-bold text-saudi-green min-w-[140px] shrink-0">决策层（Ministry / 部）:</span>
                                             <span>类似中国的中央部委（如住建部）。主要负责制定国家战略、宏观政策和法律框架，通常不直接处理具体企业的琐事。</span>
                                         </li>
-                                        <li class="flex flex-col sm:flex-row sm:gap-4">
-                                            <span class="font-bold text-gold-accent min-w-[140px]">监管层（Authority / 总局）:</span>
+                                        <li class="flex items-start gap-4">
+                                            <span class="font-bold text-gold-accent min-w-[140px] shrink-0">监管层（Authority / 总局）:</span>
                                             <span>我们需要重点关注的层级。它们往往拥有极高的独立性和执法权，专门负责某个垂直领域的发牌、监管和处罚（如房地产总局REGA），类似于中国的“银保监会”或“证监会”在特定行业的角色。</span>
                                         </li>
-                                        <li class="flex flex-col sm:flex-row sm:gap-4">
-                                            <span class="font-bold text-slate-500 min-w-[140px]">执行层（Amanah / 市政署）:</span>
+                                        <li class="flex items-start gap-4">
+                                            <span class="font-bold text-slate-500 min-w-[140px] shrink-0">执行层（Amanah / 市政署）:</span>
                                             <span>沙特没有“省房管局”，地方上的具体执行（如发施工证、修路、收垃圾）全部由各城市的 Amanah 负责。</span>
                                         </li>
-                                        <li class="flex flex-col sm:flex-row sm:gap-4">
-                                            <span class="font-bold text-slate-500 min-w-[140px]">G.R.E.s (国家队):</span>
+                                        <li class="flex items-start gap-4">
+                                            <span class="font-bold text-slate-500 min-w-[140px] shrink-0">G.R.E.s (国家队):</span>
                                             <span>类似中国的央企（如中建、中铁），但在沙特，它们承担了部分“政府职能”，如国家住房公司（NHC），既是我们的竞争对手，也可能是最大的合作伙伴。</span>
-                                        </li>                                        
+                                        </li>                                
                                     </ul>
                                 </div>
                             </div>
@@ -351,10 +351,9 @@
 
                                     </div>
                                 </div>
-                            </div>
-                            
-                                <!-- Right: RCRC System -->
-                                <div class="flex flex-col items-center group">
+
+                                <!-- Right: RCRC System (Aligned Grid) -->
+                                <div class="flex flex-col items-center">
                                     <div class="eco-node bg-white border-t-4 border-saudi-green p-5 rounded-lg shadow-sm text-center w-full max-w-[280px] border border-sand-100 hover:border-saudi-green/30">
                                         <div class="font-bold text-slate-800 text-lg">RCRC 利雅得皇家委员会</div>
                                         <div class="text-xs text-gray-400 mt-1 font-medium bg-gray-50 inline-block px-2 py-0.5 rounded">利雅得顶层战略设计</div>
@@ -366,7 +365,8 @@
                                         <div class="text-[10px] text-gray-400 border-t border-gray-100 pt-1">发证 / 验收 / 执法</div>
                                     </div>
                                 </div>
-
+                            </div>
+                            
                             <!-- External Supports -->
                             <div class="w-full border-t-2 border-dashed border-sand-200 pt-8 mt-6">
                                 <div class="text-center text-xs text-gray-400 mb-4 font-bold uppercase tracking-widest bg-white inline-block px-4 -mt-11 mx-auto relative z-20">关键外部协作机构</div>
@@ -409,7 +409,7 @@
                         <div>
                             <h1 class="text-3xl lg:text-4xl font-bold text-saudi-green">机构百科全书</h1>
                             <p class="mt-2 text-base text-slate-600 leading-relaxed">
-                                收录 16 个核心相关的部委、总局、平台与国企。
+                                收录 17 个核心相关的部委、总局、平台与国企。
                             </p>
                         </div>
                         <div class="relative w-full md:w-72">
@@ -544,6 +544,15 @@
                 role: '国企地主 / 房产界阿美', 
                 desc: 'MOMAH的投资臂膀，沙特最大的住宅用地持有者。', 
                 details: '<strong>生态位：</strong>既是监管方（标准制定），又是最大合作伙伴。<br><strong>合作价值：</strong><br>1. <strong>拿地</strong>：掌握大量政府划拨土地，可作为Sub-developer合作开发。<br>2. <strong>销售</strong>：拥有Sakani数据库，直接对接政府补贴购房客群。' 
+            },
+             { 
+                id: 'roshn', 
+                name: 'ROSHN 罗申', 
+                abbr: 'ROSHN', 
+                type: 'partner', 
+                role: '社区缔造者 / PIF全资', 
+                desc: 'PIF旗下的大型房地产开发商，专注于建设高品质的综合社区。', 
+                details: '<strong>生态位：</strong>沙特“2030愿景”的关键推动者之一，致力于将住房拥有率提高到70%。<br><strong>特点：</strong>不同于NHC的平台属性，ROSHN更像是一个超级开发商，直接下场拿地盖房，并在全国范围内开发大规模社区（如Sedra）。' 
             },
             { 
                 id: 'misa', 
@@ -1009,5 +1018,3 @@
     </script>
 </body>
 </html>
-
-
