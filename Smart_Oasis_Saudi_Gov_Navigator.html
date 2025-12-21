@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Oasis | 沙特政府关系战略系统</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Noto Sans SC -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+    <!-- Tailwind Config: Smart Oasis Brand Palette -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'brand-dark': '#1A3C34', // Deep Oasis Green (Primary)
+                        'brand-main': '#2D6A5D', // Medium Green
+                        'brand-light': '#F0F7F5', // Very Light Mint
+                        'gold-main': '#C5A065',   // Luxury Gold
+                        'gold-light': '#F9F3E9',  // Sand
+                        'gray-text': '#4A4A4A',
+                        'tech-blue': '#4A90E2',   // Exec
+                        'bg-page': '#FCFCFC'
+                    },
+                    fontFamily: {
+                        sans: ['Noto Sans SC', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        'card': '0 4px 20px -2px rgba(0, 0, 0, 0.05)',
+                        'floating': '0 10px 40px -10px rgba(26, 60, 52, 0.15)',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #FCFCFC;
+            color: #4A4A4A;
+        }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #CBD5E0;
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #A0AEC0;
+        }
+
+        /* Navigation Active State */
+        .nav-link.active {
+            background-color: #E8F3F1;
+            color: #1A3C34;
+            border-right: 3px solid #1A3C34;
+            font-weight: 700;
+        }
+
+        /* Ecosystem Tree - Vertical Compact Version */
+        .eco-node {
+            position: relative;
+            z-index: 10;
+            transition: all 0.3s ease;
+        }
+        .eco-node:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Connector Lines */
+        .connector-v {
+            width: 2px;
+            background-color: #E2E8F0;
+            margin: 0 auto;
+        }
+        .connector-h {
+            height: 2px;
+            background-color: #E2E8F0;
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        /* Accordion Animation */
+        details > summary {
+            list-style: none;
+        }
+        details > summary::-webkit-details-marker {
+            display: none;
+        }
+        details[open] summary ~ * {
+            animation: sweep .3s ease-in-out;
+        }
+        @keyframes sweep {
+            0%    {opacity: 0; transform: translateY(-10px)}
+            100%  {opacity: 1; transform: translateY(0)}
+        }
+    </style>
+</head>
+<body class="flex h-screen overflow-hidden">
+
+    <!-- Sidebar Navigation (Report Style) -->
+    <aside class="w-64 bg-white border-r border-gray-100 flex-shrink-0 flex flex-col h-full shadow-sm z-20">
+        <div class="p-6 border-b border-gray-50">
+            <div class="flex items-center gap-3">
+                <div class="h-8 w-8 bg-brand-dark rounded text-gold-main flex items-center justify-center font-bold text-lg shadow-md">S</div>
+                <div>
+                    <h1 class="font-bold text-brand-dark text-lg leading-tight">Smart Oasis</h1>
+                    <p class="text-[10px] text-gray-400 font-medium tracking-wider uppercase">研究部 | Research</p>
+                </div>
+            </div>
+        </div>
+        
+        <nav class="flex-grow p-4 space-y-1 overflow-y-auto">
+            <button onclick="switchTab('dashboard')" class="nav-link active w-full text-left px-4 py-3 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-50 transition-colors flex items-center gap-3">
+                <svg class="w-5 h-5 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+                生态全景图
+            </button>
+            <button onclick="switchTab('workflow')" class="nav-link w-full text-left px-4 py-3 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-50 transition-colors flex items-center gap-3">
+                <svg class="w-5 h-5 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
+                业务流程
+            </button>
+            <button onclick="switchTab('directory')" class="nav-link w-full text-left px-4 py-3 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-50 transition-colors flex items-center gap-3">
+                <svg class="w-5 h-5 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
+                机构百科全书
+            </button>
+            <button onclick="switchTab('legal')" class="nav-link w-full text-left px-4 py-3 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-50 transition-colors flex items-center gap-3">
+                <svg class="w-5 h-5 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3"></path></svg>
+                法律法规库
+            </button>
+        </nav>
+
+        <div class="p-4 text-xs text-gray-400 border-t border-gray-50">
+            <p>Updated: Dec 2025</p>
+            <p>Smart Oasis Internal</p>
+        </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="flex-grow h-full overflow-y-auto bg-[#FCFCFC] p-8">
+        <div class="max-w-5xl mx-auto space-y-8 pb-12">
+            
+            <!-- VIEW 1: ECOSYSTEM PANORAMA -->
+            <div id="view-dashboard" class="space-y-6 animate-fade-in">
+                <!-- Header -->
+                <div>
+                    <h2 class="text-2xl font-bold text-brand-dark">沙特房地产权力生态全景</h2>
+                    <p class="text-gray-500 mt-1 text-sm">清晰展示沙特政府机构的隶属、监管与执行关系。</p>
+                </div>
+
+                <!-- Admin System Comparison (Expandable) -->
+                <div class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+                    <details class="group">
+                        <summary class="flex justify-between items-center font-medium cursor-pointer list-none p-5 bg-brand-light/30 hover:bg-brand-light/50 transition-colors">
+                            <span class="text-brand-dark font-bold flex items-center gap-2">
+                                <svg class="w-5 h-5 text-brand-main" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                必读：沙特行政体系 vs 中国体系 (差异对比)
+                            </span>
+                            <span class="transition group-open:rotate-180">
+                                <svg fill="none" height="24" shape-rendering="geometricPrecision" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewBox="0 0 24 24" width="24"><path d="M6 9l6 6 6-6"></path></svg>
+                            </span>
+                        </summary>
+                        <div class="text-gray-600 text-sm p-6 border-t border-gray-100 leading-relaxed bg-white">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                <div>
+                                    <h4 class="font-bold text-gray-800 mb-2">核心逻辑差异</h4>
+                                    <p class="mb-2">沙特行政体系没有中国严格的“省厅-市局-县局”垂直管理体系，而是呈现<strong>“中央部委决策 + 强力总局监管 + 地区市政署执行”</strong>的扁平化格局。</p>
+                                    <ul class="list-disc pl-4 space-y-1">
+                                        <li><strong>决策层 (Ministry/部)：</strong> 类似中国的中央部委（如住建部），负责定战略、出政策，通常不直接管琐事。</li>
+                                        <li><strong>监管层 (Authority/总局)：</strong> 类似中国的银保监会，拥有极高独立性和执法权，负责垂直领域的发牌和处罚（如房地产总局 REGA）。</li>
+                                        <li><strong>执行层 (Amanah/市政署)：</strong> 地方没有“房管局”，具体发证、修路、检查由各市的 Amanah 负责。</li>
+                                    </ul>
+                                </div>
+                                <div class="bg-gray-50 p-4 rounded-lg">
+                                    <h4 class="font-bold text-gray-800 mb-2">对我们业务的启示</h4>
+                                    <ul class="space-y-2">
+                                        <li class="flex items-start gap-2">
+                                            <span class="text-gold-main mt-1">●</span>
+                                            <span>不要找“省房管局”，直接找中央的 <strong>MOMAH</strong> 和 <strong>REGA</strong> 谈政策。</span>
+                                        </li>
+                                        <li class="flex items-start gap-2">
+                                            <span class="text-gold-main mt-1">●</span>
+                                            <span>施工现场的具体问题，必须搞定地方上的 <strong>Amanah</strong>。</span>
+                                        </li>
+                                        <li class="flex items-start gap-2">
+                                            <span class="text-gold-main mt-1">●</span>
+                                            <span><strong>“国家队”(G.R.E.s)</strong> 如 NHC，既是竞争对手，也是最大的土地来源方。</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </details>
+                </div>
+
+                <!-- Vertical Ecosystem Tree (Fixed Width Issue) -->
+                <div class="bg-white rounded-xl p-8 border border-gray-200 shadow-card flex justify-center">
+                    <div class="w-full max-w-4xl flex flex-col items-center gap-8">
+                        
+                        <!-- Level 1: King -->
+                        <div class="eco-node bg-brand-dark text-white px-8 py-3 rounded shadow-floating text-center min-w-[200px]">
+                            <div class="font-bold text-lg">国王 / 内阁</div>
+                            <div class="text-[10px] opacity-70 uppercase tracking-wider">Council of Ministers</div>
+                        </div>
+
+                        <!-- Connector -->
+                        <div class="h-8 connector-v"></div>
+
+                        <!-- Level 2: Top Strategies (Split) -->
+                        <div class="grid grid-cols-2 gap-12 w-full relative">
+                            <!-- Horizontal Connector for Level 2 -->
+                            <div class="absolute top-0 left-1/4 right-1/4 h-px bg-gray-200 -mt-8 hidden md:block"></div> <!-- Simplified visual -->
+                            
+                            <!-- Left: RCRC System -->
+                            <div class="flex flex-col items-center">
+                                <div class="eco-node bg-white border-t-4 border-brand-dark p-4 rounded shadow-sm text-center w-full max-w-[240px]">
+                                    <div class="font-bold text-gray-800">RCRC 利雅得皇家委员会</div>
+                                    <div class="text-xs text-gray-400 mt-1">利雅得顶层战略设计</div>
+                                </div>
+                                <div class="h-6 connector-v"></div>
+                                <div class="eco-node bg-white border-t-4 border-tech-blue p-3 rounded shadow-sm text-center w-full max-w-[200px]">
+                                    <div class="font-bold text-gray-800">Riyadh Amanah</div>
+                                    <div class="text-xs text-tech-blue font-bold">市政署 (执行)</div>
+                                    <div class="text-xs text-gray-400 mt-1">发证 / 验收 / 执法</div>
+                                </div>
+                            </div>
+
+                            <!-- Right: MOMAH System (Complex) -->
+                            <div class="flex flex-col items-center">
+                                <div class="eco-node bg-brand-light border border-brand-main/20 p-4 rounded shadow-sm text-center w-full max-w-[280px]">
+                                    <div class="font-bold text-brand-dark">MOMAH 市政与住房部</div>
+                                    <div class="text-xs text-brand-main mt-1">房地产最高主管部门</div>
+                                </div>
+                                
+                                <div class="h-6 connector-v"></div>
+
+                                <!-- MOMAH Sub-entities Grid -->
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 w-full">
+                                    
+                                    <!-- REGA (Regulator) -->
+                                    <div class="flex flex-col items-center">
+                                        <div class="eco-node bg-white border-t-4 border-gold-main p-3 rounded shadow-sm text-center w-full">
+                                            <div class="font-bold text-gray-800">REGA 房产总局</div>
+                                            <div class="text-xs text-gold-main font-bold">行业监管</div>
+                                        </div>
+                                        <div class="h-4 connector-v"></div>
+                                        <div class="bg-gray-50 border border-gray-100 rounded p-2 w-full space-y-2">
+                                            <div class="text-xs text-center font-bold text-gray-400">下属平台</div>
+                                            <div class="bg-white border border-gray-200 rounded px-2 py-1 text-xs text-center">Ejar (租赁)</div>
+                                            <div class="bg-white border border-gray-200 rounded px-2 py-1 text-xs text-center">Wafi (期房)</div>
+                                            <div class="bg-white border border-gray-200 rounded px-2 py-1 text-xs text-center">Mullak (物业)</div>
+                                        </div>
+                                    </div>
+
+                                    <!-- NHC (Partner) -->
+                                    <div class="flex flex-col items-center">
+                                        <div class="eco-node bg-white border-t-4 border-green-600 border-dashed p-3 rounded shadow-sm text-center w-full">
+                                            <div class="font-bold text-gray-800">NHC 国家住房公司</div>
+                                            <div class="text-xs text-green-600 font-bold">最大地主/国企</div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Etmam (Service) -->
+                                    <div class="flex flex-col items-center">
+                                        <div class="eco-node bg-white border-t-4 border-brand-main p-3 rounded shadow-sm text-center w-full">
+                                            <div class="font-bold text-gray-800">Etmam 服务中心</div>
+                                            <div class="text-xs text-brand-main font-bold">审批绿色通道</div>
+                                        </div>
+                                        <div class="h-4 connector-v"></div>
+                                        <div class="bg-white border border-gray-200 rounded px-2 py-1 text-xs text-center w-full">Balady (技术平台)</div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- External Supports -->
+                        <div class="w-full border-t border-dashed border-gray-300 pt-6 mt-4">
+                            <div class="text-center text-xs text-gray-400 mb-4 font-bold uppercase tracking-widest">关键外部协作机构</div>
+                            <div class="flex flex-wrap justify-center gap-4">
+                                <div class="px-4 py-2 bg-white border border-gray-200 rounded shadow-sm text-xs font-bold text-gray-600">MISA 投资部</div>
+                                <div class="px-4 py-2 bg-white border border-gray-200 rounded shadow-sm text-xs font-bold text-gray-600">MC 商务部</div>
+                                <div class="px-4 py-2 bg-white border border-gray-200 rounded shadow-sm text-xs font-bold text-gray-600">ZATCA 税务局</div>
+                                <div class="px-4 py-2 bg-white border border-gray-200 rounded shadow-sm text-xs font-bold text-gray-600">Civil Defense 民防</div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- VIEW 2: WORKFLOW -->
+            <div id="view-workflow" class="hidden space-y-6 animate-fade-in">
+                <div>
+                    <h2 class="text-2xl font-bold text-brand-dark">业务全流程交互指引</h2>
+                    <p class="text-gray-500 mt-1 text-sm">从公司设立到产生收入的主要合规节点。</p>
+                </div>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                    <!-- Step List -->
+                    <div class="lg:col-span-4 space-y-2" id="workflow-steps-container">
+                        <!-- JS Injected -->
+                    </div>
+                    <!-- Detail View -->
+                    <div class="lg:col-span-8 bg-white border border-gray-100 rounded-xl p-8 shadow-card relative overflow-hidden flex flex-col justify-center min-h-[400px]" id="workflow-content">
+                        <!-- JS Injected -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- VIEW 3: DIRECTORY (Expanded to all 16) -->
+            <div id="view-directory" class="hidden space-y-6 animate-fade-in">
+                <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+                    <div>
+                        <h2 class="text-2xl font-bold text-brand-dark">机构百科全书</h2>
+                        <p class="text-gray-500 mt-1 text-sm">收录 16 个核心相关的部委、总局、平台与国企。</p>
+                    </div>
+                    <input type="text" id="searchInput" placeholder="搜索机构名称..." class="px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-main w-full md:w-64 text-sm bg-white">
+                </div>
+
+                <!-- Type Filters -->
+                <div class="flex flex-wrap gap-2" id="filter-container"></div>
+
+                <!-- Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5" id="directory-grid">
+                    <!-- Cards JS Injected -->
+                </div>
+            </div>
+
+            <!-- VIEW 4: LEGAL LIBRARY (Refined) -->
+            <div id="view-legal" class="hidden space-y-6 animate-fade-in">
+                <div>
+                    <h2 class="text-2xl font-bold text-brand-dark">房地产法律法规库</h2>
+                    <p class="text-gray-500 mt-1 text-sm">与 Smart Oasis 业务紧密相关的现行法律框架。</p>
+                </div>
+                
+                <div class="space-y-4" id="legal-list">
+                    <!-- JS Injected -->
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- JS Logic -->
+    <script>
+        // --- DATASET: 16 Agencies ---
+        const agencyData = [
+            // 1. MOMAH
+            { id: 'momah', name: '市政与住房部', abbr: 'MOMAH', type: 'ministry', role: '核心主管', desc: '房地产最高主管部门，由原市政部与住房部合并而成。', 
+              details: '负责制定国家住房政策、城市规划标准及土地分配。我们的“娘家”部门。' },
+            // 2. REGA
+            { id: 'rega', name: '房地产总局', abbr: 'REGA', type: 'authority', role: '行业监管', desc: '负责房地产行业的立法、发牌与监管。', 
+              details: '2023年新法执行主体。负责中介发牌(Fal)、租赁备案(Ejar)、期房监管(Wafi)。' },
+            // 3. RCRC
+            { id: 'rcrc', name: '利雅得皇家委员会', abbr: 'RCRC', type: 'ministry', role: '战略顶层', desc: '直属内阁，王储挂帅，利雅得最高战略机构。', 
+              details: '负责利雅得2030愿景规划。在利雅得，其战略地位高于市政署。' },
+            // 4. Amanah
+            { id: 'amanah', name: '利雅得市政署', abbr: 'Amanah', type: 'execution', role: '地方执行', desc: '隶属MOMAH，负责具体发证与市政执法。', 
+              details: '发放建筑施工许可证、完工证；负责日常街道卫生与违建检查。' },
+            // 5. NHC
+            { id: 'nhc', name: '国家住房公司', abbr: 'NHC', type: 'partner', role: '国企地主', desc: 'MOMAH的全资投资臂膀，最大住宅用地持有者。', 
+              details: '承担国家住房供给任务。我们可以做其Sub-developer拿地开发。' },
+            // 6. MISA
+            { id: 'misa', name: '投资部', abbr: 'MISA', type: 'ministry', role: '外资准入', desc: '原SAGIA，负责发放外资投资许可证。', 
+              details: '外资企业的保护伞。持有MISA License是我们在沙特经营的前提。' },
+            // 7. MC
+            { id: 'mc', name: '商务部', abbr: 'MC', type: 'ministry', role: '商业注册', desc: '负责公司商业登记(CR)与公司法执行。', 
+              details: '管理所有商业实体的注册、年检与注销。' },
+            // 8. Etmam
+            { id: 'etmam', name: '开发商服务中心', abbr: 'Etmam', type: 'ministry', role: '绿色通道', desc: 'MOMAH下属的一站式房地产开发审批中心。', 
+              details: '旨在加速大项目的审批流程，协调各政府部门。' },
+            // 9. Balady
+            { id: 'balady', name: 'Balady 平台', abbr: 'Balady', type: 'platform', role: '市政许可', desc: 'MOMAH的数字化门户，在线申请施工证。', 
+              details: '所有与土地、建设、挖掘相关的许可证均在此平台全数字化申请。' },
+            // 10. Ejar
+            { id: 'ejar', name: 'Ejar 租赁网', abbr: 'Ejar', type: 'platform', role: '租赁备案', desc: 'REGA下属的强制性租赁合同备案系统。', 
+              details: '不备案合同无法作为法律依据，也无法通过法院追讨租金。' },
+            // 11. Wafi
+            { id: 'wafi', name: 'Wafi 委员会', abbr: 'Wafi', type: 'platform', role: '期房监管', desc: 'REGA下属，负责期房销售许可与资金监管。', 
+              details: 'Off-plan销售必须拿证，资金需存入Escrow Account监管账户。' },
+            // 12. Mullak
+            { id: 'mullak', name: 'Mullak 计划', abbr: 'Mullak', type: 'platform', role: '业主协会', desc: 'REGA下属，负责共有产权与物业费管理。', 
+              details: '分层销售的公寓必须在此注册业主协会(HOA)。' },
+            // 13. Tourism
+            { id: 'tourism', name: '旅游部', abbr: 'Tourism', type: 'ministry', role: '酒店公寓', desc: '负责酒店与服务式公寓的评级发牌。', 
+              details: '如果我们运营短租或高端服务式公寓，需受其监管。' },
+            // 14. Civil Defense
+            { id: 'civil', name: '民防总局', abbr: 'Civil Defense', type: 'execution', role: '消防安全', desc: '内政部下属，拥有验收一票否决权。', 
+              details: '所有建筑完工前必须通过严格的消防验收。' },
+            // 15. ZATCA
+            { id: 'zatca', name: '税务海关总局', abbr: 'ZATCA', type: 'authority', role: '税务征收', desc: '负责增值税(VAT)与房产交易税(RETT)。', 
+              details: '房产交易需缴5% RETT。商业租赁需缴15% VAT。' },
+            // 16. REDF
+            { id: 'redf', name: '房地产发展基金', abbr: 'REDF', type: 'partner', role: '金融支持', desc: '提供购房补贴与开发商融资支持。', 
+              details: '关注其Tatweer计划，为开发商提供过桥融资。' }
+        ];
+
+        const lawsData = [
+            { title: "房地产经纪法 (Real Estate Brokerage Law)", date: "2023生效", desc: "取缔自由经纪人，强制中介持证(Fal License)。规范佣金上限与独家代理合同。" },
+            { title: "房地产参股/集资法 (Real Estate Contributions Law)", date: "2023生效", desc: "规范多方集资、众筹开发房地产的行为。由CMA(资本市场局)与REGA双重监管。" },
+            { title: "民事交易法 (Civil Transactions Law)", date: "2023生效", desc: "沙特首部民法典。确立了合同神圣性，减少了法官基于伊斯兰教法的自由裁量权，极大增强商业确定性。" },
+            { title: "外商投资法 (Foreign Investment Law)", date: "基础法律", desc: "确立了外资与内资平等待遇原则。规定了MISA发牌制度及外资负面清单。" },
+            { title: "非沙特人房地产所有权与投资法", date: "现行/修订中", desc: "目前非沙特人在利雅得买房仍受限(需审批)。新法草案旨在进一步放开限制，但尚未正式落地。" },
+            { title: "房地产交易税法 (RETT Executive Regulations)", date: "2020生效", desc: "规定房地产处置免征15%增值税，改为征收5%的房地产交易税(RETT)，降低交易成本。" },
+            { title: "民防与消防安全条例", date: "强制标准", desc: "内政部颁布的严格建筑消防标准。是获取完工证的前置条件，拥有最高执法权。" }
+        ];
+
+        const workflowSteps = [
+            { title: "1. 市场准入", desc: "获取经营身份", tasks: [{dept:"MISA", txt:"申请投资许可"}, {dept:"MC", txt:"商业登记 (CR)"}, {dept:"ZATCA", txt:"税务登记"}] },
+            { title: "2. 拿地规划", desc: "锁定项目用地", tasks: [{dept:"NHC", txt:"洽谈土地合作"}, {dept:"RCRC", txt:"2030合规审查"}, {dept:"MOMAH", txt:"Zoning用途变更"}] },
+            { title: "3. 建设审批", desc: "从图纸到动工", tasks: [{dept:"Etmam", txt:"综合审批通道"}, {dept:"Balady", txt:"申请施工许可证"}, {dept:"Wafi", txt:"期房销售许可"}] },
+            { title: "4. 验收交付", desc: "合规转为资产", tasks: [{dept:"民防", txt:"消防验收 (核心)"}, {dept:"Amanah", txt:"完工证申请"}, {dept:"Mullak", txt:"业主协会注册"}] },
+            { title: "5. 运营管理", desc: "长期收益", tasks: [{dept:"Ejar", txt:"租赁合同备案"}, {dept:"Tourism", txt:"服务公寓执照"}, {dept:"ZATCA", txt:"税务申报"}] }
+        ];
+
+        // --- RENDER FUNCTIONS ---
+
+        function renderDirectory(filterType = 'all', searchVal = '') {
+            const grid = document.getElementById('directory-grid');
+            grid.innerHTML = '';
+            
+            const filtered = agencyData.filter(d => {
+                const matchType = filterType === 'all' || d.type === filterType;
+                const matchSearch = d.name.includes(searchVal) || d.abbr.toLowerCase().includes(searchVal.toLowerCase());
+                return matchType && matchSearch;
+            });
+
+            filtered.forEach(d => {
+                let colorClass = 'border-l-4 border-gray-300';
+                let tagClass = 'bg-gray-100 text-gray-600';
+                
+                if(d.type === 'ministry') { colorClass = 'border-l-4 border-brand-dark'; tagClass = 'bg-brand-dark text-white'; }
+                if(d.type === 'authority') { colorClass = 'border-l-4 border-gold-main'; tagClass = 'bg-gold-main text-white'; }
+                if(d.type === 'execution') { colorClass = 'border-l-4 border-tech-blue'; tagClass = 'bg-tech-blue text-white'; }
+                if(d.type === 'partner') { colorClass = 'border-l-4 border-green-600'; tagClass = 'bg-green-600 text-white'; }
+                if(d.type === 'platform') { colorClass = 'border-l-4 border-purple-500'; tagClass = 'bg-purple-500 text-white'; }
+
+                grid.innerHTML += `
+                    <div class="bg-white p-5 rounded-lg shadow-sm border border-gray-100 hover:shadow-md transition-all ${colorClass} group">
+                        <div class="flex justify-between items-start mb-3">
+                            <h3 class="font-bold text-lg text-gray-800">${d.abbr}</h3>
+                            <span class="text-[10px] px-2 py-1 rounded ${tagClass}">${d.role}</span>
+                        </div>
+                        <h4 class="text-sm font-bold text-gray-700 mb-2">${d.name}</h4>
+                        <p class="text-xs text-gray-500 mb-4 h-8 overflow-hidden">${d.desc}</p>
+                        
+                        <details class="text-xs text-gray-600 border-t border-gray-100 pt-2 cursor-pointer">
+                            <summary class="list-none font-bold text-brand-main flex items-center gap-1 hover:underline">
+                                <span>展开详细职能</span>
+                                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            </summary>
+                            <p class="mt-2 p-2 bg-gray-50 rounded">${d.details}</p>
+                        </details>
+                    </div>
+                `;
+            });
+        }
+
+        function renderWorkflow(activeIndex = 0) {
+            const stepsDiv = document.getElementById('workflow-steps-container');
+            const contentDiv = document.getElementById('workflow-content');
+            
+            stepsDiv.innerHTML = workflowSteps.map((s, i) => `
+                <button onclick="renderWorkflow(${i})" class="w-full text-left px-5 py-4 rounded-lg border transition-all flex items-center justify-between ${i===activeIndex ? 'bg-white border-brand-main shadow-sm ring-1 ring-brand-main' : 'bg-white border-gray-100 hover:bg-gray-50 text-gray-500'}">
+                    <div>
+                        <div class="font-bold text-sm ${i===activeIndex ? 'text-brand-dark' : ''}">${s.title}</div>
+                        <div class="text-xs ${i===activeIndex ? 'text-brand-main' : 'text-gray-400'}">${s.desc}</div>
+                    </div>
+                    ${i===activeIndex ? '<svg class="w-5 h-5 text-brand-main" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>' : ''}
+                </button>
+            `).join('');
+
+            const step = workflowSteps[activeIndex];
+            contentDiv.innerHTML = `
+                <div class="relative z-10 animate-fade-in">
+                    <div class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">当前阶段</div>
+                    <h3 class="text-2xl font-bold text-brand-dark mb-6">${step.title} <span class="text-gray-400 font-normal">/ ${step.desc}</span></h3>
+                    
+                    <div class="space-y-3">
+                        ${step.tasks.map(t => `
+                            <div class="flex items-center p-4 bg-gray-50 rounded border border-gray-100">
+                                <span class="px-2 py-1 rounded bg-brand-dark text-white text-xs font-bold mr-3 min-w-[60px] text-center">${t.dept}</span>
+                                <span class="text-sm text-gray-700 font-medium">${t.txt}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+                <div class="absolute -bottom-10 -right-10 text-[180px] font-bold text-gray-50 select-none pointer-events-none">${activeIndex+1}</div>
+            `;
+        }
+
+        function renderLaws() {
+            const container = document.getElementById('legal-list');
+            container.innerHTML = lawsData.map(law => `
+                <div class="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-sm transition-shadow">
+                    <details class="group">
+                        <summary class="flex justify-between items-center p-5 cursor-pointer list-none bg-white hover:bg-gray-50 transition-colors">
+                            <div>
+                                <h4 class="font-bold text-gray-800 text-lg group-open:text-brand-dark">${law.title}</h4>
+                                <span class="text-xs font-medium px-2 py-0.5 rounded bg-brand-light text-brand-dark border border-brand-main/20 inline-block mt-2">${law.date}</span>
+                            </div>
+                            <svg class="w-5 h-5 text-gray-400 transform group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </summary>
+                        <div class="p-5 border-t border-gray-100 bg-gray-50 text-sm text-gray-600 leading-relaxed">
+                            <span class="font-bold text-gray-700">核心内容与影响：</span><br>
+                            ${law.desc}
+                        </div>
+                    </details>
+                </div>
+            `).join('');
+        }
+
+        function initFilters() {
+            const container = document.getElementById('filter-container');
+            const filters = [
+                {id: 'all', txt: '全部'},
+                {id: 'ministry', txt: '部委'},
+                {id: 'authority', txt: '总局'},
+                {id: 'execution', txt: '执行'},
+                {id: 'platform', txt: '平台'},
+                {id: 'partner', txt: '国企'}
+            ];
+            container.innerHTML = filters.map(f => `
+                <button onclick="applyFilter('${f.id}')" class="filter-btn px-3 py-1 rounded-full text-xs font-medium border border-gray-200 hover:bg-gray-50 text-gray-600 transition-colors" data-id="${f.id}">
+                    ${f.txt}
+                </button>
+            `).join('');
+            // Set All active
+            document.querySelector('[data-id="all"]').classList.add('bg-brand-dark', 'text-white', 'border-transparent');
+            document.querySelector('[data-id="all"]').classList.remove('text-gray-600', 'hover:bg-gray-50');
+        }
+
+        function applyFilter(type) {
+            document.querySelectorAll('.filter-btn').forEach(b => {
+                b.className = 'filter-btn px-3 py-1 rounded-full text-xs font-medium border border-gray-200 hover:bg-gray-50 text-gray-600 transition-colors';
+            });
+            const activeBtn = document.querySelector(`[data-id="${type}"]`);
+            activeBtn.className = 'filter-btn px-3 py-1 rounded-full text-xs font-medium bg-brand-dark text-white border-transparent transition-colors';
+            
+            renderDirectory(type, document.getElementById('searchInput').value);
+        }
+
+        function switchTab(id) {
+            ['dashboard', 'workflow', 'directory', 'legal'].forEach(v => document.getElementById(`view-${v}`).classList.add('hidden'));
+            document.getElementById(`view-${id}`).classList.remove('hidden');
+            
+            document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+            const idx = ['dashboard', 'workflow', 'directory', 'legal'].indexOf(id);
+            document.querySelectorAll('.nav-link')[idx].classList.add('active');
+        }
+
+        // --- INIT ---
+        document.addEventListener('DOMContentLoaded', () => {
+            renderWorkflow();
+            initFilters();
+            renderDirectory();
+            renderLaws();
+            
+            document.getElementById('searchInput').addEventListener('input', (e) => renderDirectory('all', e.target.value));
+        });
+
+    </script>
+</body>
+</html>
