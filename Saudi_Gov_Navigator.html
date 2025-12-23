@@ -190,7 +190,7 @@
         </div>
 
         <div class="p-4 text-[10px] text-sand-200/60 border-t border-white/10">
-            <p>Version 2.1 | Dec 2025</p>
+            <p>Version 2.2 | Dec 2025</p>
             <p class="font-mono mt-1">INTERNAL USE ONLY</p>
         </div>
     </aside>
@@ -209,8 +209,8 @@
                     <header class="mb-8 border-b-2 border-gold-accent pb-6">
                         <div class="flex flex-col md:flex-row md:justify-between md:items-end gap-4">
                             <div>
-                                <h1 class="text-3xl lg:text-4xl font-bold text-saudi-green tracking-tight" data-i18n="dash_title">沙特房地产权力生态全景</h1>
-                                <p class="mt-2 text-slate-600" data-i18n="dash_subtitle">
+                                <h1 class="text-2xl md:text-3xl lg:text-4xl font-bold text-saudi-green tracking-tight" data-i18n="dash_title">沙特房地产权力生态全景</h1>
+                                <p class="mt-2 text-sm md:text-base text-slate-600" data-i18n="dash_subtitle">
                                     理清沙特政府机构的隶属、监管与执行关系，识别“裁判员”与“运动员”。
                                 </p>
                             </div>
@@ -226,14 +226,15 @@
                     </div>
 
                     <!-- Vertical Ecosystem Tree -->
-                    <div class="bg-white rounded-xl p-8 lg:p-12 border border-sand-200 shadow-card flex justify-center overflow-x-auto relative min-h-[600px]">
+                    <!-- Mobile Optimization: Removed min-w constraint, reduced padding, adjusted grid -->
+                    <div class="bg-white rounded-xl p-4 lg:p-12 border border-sand-200 shadow-card flex justify-center relative min-h-[600px] overflow-hidden">
                         <!-- Background Grid Pattern -->
                         <div class="absolute inset-0 opacity-[0.03]" style="background-image: radial-gradient(#1e5f44 1px, transparent 1px); background-size: 20px 20px;"></div>
 
-                        <div class="w-full max-w-5xl flex flex-col items-center gap-8 min-w-[700px] relative z-10">
+                        <div class="w-full max-w-5xl flex flex-col items-center gap-8 relative z-10">
                             
                             <!-- Level 1: King -->
-                            <div class="eco-node bg-saudi-green text-white px-10 py-4 rounded-lg shadow-floating text-center min-w-[240px] border-b-4 border-gold-accent">
+                            <div class="eco-node bg-saudi-green text-white px-10 py-4 rounded-lg shadow-floating text-center min-w-[240px] border-b-4 border-gold-accent w-full md:w-auto">
                                 <div class="font-bold text-xl tracking-wide" data-i18n="tree_king">国王 / 内阁</div>
                                 <div class="text-[10px] opacity-80 uppercase tracking-widest mt-1">Council of Ministers</div>
                             </div>
@@ -242,15 +243,16 @@
                             <div class="h-10 connector-v"></div>
 
                             <!-- Level 2: Top Strategies (Split) -->
-                            <div class="grid grid-cols-2 gap-16 w-full relative">
-                                <!-- Horizontal Connector for Level 2 -->
+                            <!-- Mobile: Stacks vertically (grid-cols-1) -->
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 w-full relative">
+                                <!-- Horizontal Connector for Level 2 (Desktop Only) -->
                                 <div class="absolute top-0 left-1/4 right-1/4 h-0.5 bg-sand-200 -mt-10 hidden md:block rounded-full"></div> 
                                 <div class="absolute top-0 left-1/4 h-10 w-0.5 bg-sand-200 -mt-10 hidden md:block"></div>
                                 <div class="absolute top-0 right-1/4 h-10 w-0.5 bg-sand-200 -mt-10 hidden md:block"></div>
 
                                 <!-- Left: MOMAH System (Complex) -->
-                                <div class="flex flex-col items-center">
-                                    <div class="eco-node bg-sand-50 border-2 border-saudi-green-light/20 p-5 rounded-lg shadow-sm text-center w-full max-w-[320px]">
+                                <div class="flex flex-col items-center w-full">
+                                    <div class="eco-node bg-sand-50 border-2 border-saudi-green-light/20 p-5 rounded-lg shadow-sm text-center w-full md:max-w-[320px]">
                                         <div class="font-bold text-saudi-green text-lg">MOMAH</div>
                                         <div class="text-xs text-saudi-green-light mt-1 font-bold bg-white/50 inline-block px-2 py-0.5 rounded" data-i18n="tree_momah_role">房地产最高主管部门</div>
                                     </div>
@@ -259,14 +261,17 @@
 
                                     <!-- MOMAH Sub-entities Grid -->
                                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 w-full relative">
-                                        <!-- Horizontal Line for MOMAH children -->
+                                        <!-- Horizontal Line for MOMAH children (Desktop Only) -->
                                         <div class="absolute top-0 left-6 right-6 h-0.5 bg-sand-200 -mt-8 hidden md:block"></div>
                                         <div class="absolute top-0 left-1/2 h-8 w-0.5 bg-sand-200 -mt-8 hidden md:block"></div>
                                         <div class="absolute top-0 left-6 h-8 w-0.5 bg-sand-200 -mt-8 hidden md:block"></div>
                                         <div class="absolute top-0 right-6 h-8 w-0.5 bg-sand-200 -mt-8 hidden md:block"></div>
 
                                         <!-- REGA (Regulator) -->
-                                        <div class="flex flex-col items-center">
+                                        <div class="flex flex-col items-center w-full">
+                                            <!-- Mobile: Add top connector manually if horizontal line is hidden -->
+                                            <div class="h-8 connector-v md:hidden -mt-6 mb-2"></div>
+                                            
                                             <div class="eco-node bg-white border-t-4 border-gold-accent p-3 rounded shadow-sm text-center w-full border border-sand-100">
                                                 <div class="font-bold text-slate-800">REGA</div>
                                                 <div class="text-[10px] text-white bg-gold-accent px-2 py-0.5 rounded-full inline-block mt-1 font-bold" data-i18n="tree_rega_role">行业监管</div>
@@ -283,7 +288,8 @@
                                         </div>
 
                                         <!-- NHC (Partner) -->
-                                        <div class="flex flex-col items-center">
+                                        <div class="flex flex-col items-center w-full">
+                                            <div class="h-8 connector-v md:hidden -mt-6 mb-2"></div>
                                             <div class="eco-node bg-white border-2 border-green-600 border-dashed p-4 rounded shadow-sm text-center w-full border border-sand-100 h-full flex flex-col justify-center">
                                                 <div class="font-bold text-slate-800">NHC</div>
                                                 <div class="text-xs text-green-600 font-bold mt-1" data-i18n="tree_nhc_role">最大地主 / 国企</div>
@@ -291,7 +297,8 @@
                                         </div>
 
                                         <!-- Etmam (Service) -->
-                                        <div class="flex flex-col items-center">
+                                        <div class="flex flex-col items-center w-full">
+                                            <div class="h-8 connector-v md:hidden -mt-6 mb-2"></div>
                                             <div class="eco-node bg-white border-t-4 border-saudi-green-light p-3 rounded shadow-sm text-center w-full border border-sand-100">
                                                 <div class="font-bold text-slate-800">Etmam</div>
                                                 <div class="text-[10px] text-white bg-saudi-green-light px-2 py-0.5 rounded-full inline-block mt-1 font-bold" data-i18n="tree_etmam_role">绿色通道</div>
@@ -306,13 +313,16 @@
                                 </div>
 
                                 <!-- Right: RCRC System (Aligned Grid) -->
-                                <div class="flex flex-col items-center">
-                                    <div class="eco-node bg-white border-t-4 border-saudi-green p-5 rounded-lg shadow-sm text-center w-full max-w-[280px] border border-sand-100 hover:border-saudi-green/30">
+                                <div class="flex flex-col items-center w-full mt-8 md:mt-0">
+                                    <!-- Mobile Connector to link RCRC to Top -->
+                                    <div class="h-8 connector-v md:hidden -mt-8 mb-2"></div>
+
+                                    <div class="eco-node bg-white border-t-4 border-saudi-green p-5 rounded-lg shadow-sm text-center w-full md:max-w-[280px] border border-sand-100 hover:border-saudi-green/30">
                                         <div class="font-bold text-slate-800 text-lg">RCRC</div>
                                         <div class="text-xs text-gray-400 mt-1 font-medium bg-gray-50 inline-block px-2 py-0.5 rounded" data-i18n="tree_rcrc_role">利雅得顶层战略设计</div>
                                     </div>
                                     <div class="h-8 connector-v"></div>
-                                    <div class="eco-node bg-white border-l-4 border-slate-500 p-4 rounded shadow-sm text-center w-full max-w-[220px] border border-sand-100">
+                                    <div class="eco-node bg-white border-l-4 border-slate-500 p-4 rounded shadow-sm text-center w-full md:max-w-[220px] border border-sand-100">
                                         <div class="font-bold text-slate-800">Riyadh Amanah</div>
                                         <div class="text-xs text-slate-500 font-bold uppercase tracking-wider mb-1" data-i18n="tree_amanah_role">市政署 (执行)</div>
                                         <div class="text-[10px] text-gray-400 border-t border-gray-100 pt-1" data-i18n="tree_amanah_desc">发证 / 验收 / 执法</div>
@@ -338,8 +348,8 @@
                 <!-- VIEW 2: WORKFLOW -->
                 <div id="workflow" class="section-content hidden animate-fade-in">
                     <header class="mb-8 border-b-2 border-gold-accent pb-4">
-                        <h1 class="text-3xl lg:text-4xl font-bold text-saudi-green" data-i18n="flow_title">业务全流程交互指引</h1>
-                        <p class="mt-4 text-base md:text-lg text-slate-600 leading-relaxed" data-i18n="flow_subtitle">
+                        <h1 class="text-2xl md:text-3xl lg:text-4xl font-bold text-saudi-green" data-i18n="flow_title">业务全流程交互指引</h1>
+                        <p class="mt-4 text-sm md:text-lg text-slate-600 leading-relaxed" data-i18n="flow_subtitle">
                             从公司设立到产生收入的主要合规节点，每一步都关乎项目成败。
                         </p>
                     </header>
@@ -360,8 +370,8 @@
                 <div id="directory" class="section-content block animate-fade-in">
                     <header class="mb-8 border-b-2 border-gold-accent pb-6 flex flex-col md:flex-row justify-between items-end gap-4">
                         <div>
-                            <h1 class="text-3xl lg:text-4xl font-bold text-saudi-green" data-i18n="dir_title">机构百科全书</h1>
-                            <p class="mt-2 text-base text-slate-600 leading-relaxed" data-i18n="dir_subtitle">
+                            <h1 class="text-2xl md:text-3xl lg:text-4xl font-bold text-saudi-green" data-i18n="dir_title">机构百科全书</h1>
+                            <p class="mt-2 text-sm md:text-base text-slate-600 leading-relaxed" data-i18n="dir_subtitle">
                                 收录 17 个核心相关的部委、总局、平台与国企。
                             </p>
                         </div>
@@ -383,8 +393,8 @@
                 <!-- VIEW 4: LEGAL LIBRARY (Refined) -->
                 <div id="legal" class="section-content hidden animate-fade-in">
                     <header class="mb-8 border-b-2 border-gold-accent pb-4">
-                        <h1 class="text-3xl lg:text-4xl font-bold text-saudi-green" data-i18n="law_title">房地产法律法规库</h1>
-                        <p class="mt-4 text-base md:text-lg text-slate-600 leading-relaxed" data-i18n="law_subtitle">
+                        <h1 class="text-2xl md:text-3xl lg:text-4xl font-bold text-saudi-green" data-i18n="law_title">房地产法律法规库</h1>
+                        <p class="mt-4 text-sm md:text-lg text-slate-600 leading-relaxed" data-i18n="law_subtitle">
                             与 Smart Oasis 业务紧密相关的现行法律框架与合规要点。
                         </p>
                     </header>
@@ -1022,7 +1032,7 @@
                         <span class="w-2 h-2 rounded-full bg-gold-accent animate-pulse"></span>
                         ${t('flow_step_label')}
                     </div>
-                    <h3 class="text-3xl font-bold text-saudi-green mb-1">${dt(step.title)}</h3>
+                    <h3 class="text-2xl md:text-3xl font-bold text-saudi-green mb-1">${dt(step.title)}</h3>
                     <p class="text-gray-500 mb-8 font-medium">${dt(step.desc)}</p>
                     
                     <div class="space-y-4">
@@ -1034,7 +1044,7 @@
                         `).join('')}
                     </div>
                 </div>
-                <div class="absolute -bottom-16 -right-12 text-[200px] font-bold text-sand-100/50 select-none pointer-events-none">${activeIndex+1}</div>
+                <div class="absolute -bottom-4 -right-4 md:-bottom-16 md:-right-12 text-[100px] md:text-[200px] font-bold text-sand-100/50 select-none pointer-events-none">${activeIndex+1}</div>
             `;
         }
 
@@ -1089,20 +1099,20 @@
                             <h4 class="font-bold text-slate-800 mb-4 text-base border-l-4 border-gold-accent pl-3">${t('comp_core_diff')}</h4>
                             <p class="mb-4 text-slate-600">${t('comp_intro')}</p>
                             <ul class="space-y-4 text-slate-600">
-                                <li class="flex items-start gap-4">
-                                    <span class="font-bold text-saudi-green min-w-[160px] md:min-w-[200px] shrink-0">${t('comp_ministry')}</span>
+                                <li class="flex flex-col md:flex-row md:items-start gap-1 md:gap-4">
+                                    <span class="font-bold text-saudi-green w-full md:w-auto md:min-w-[200px] shrink-0">${t('comp_ministry')}</span>
                                     <span>${t('comp_ministry_desc')}</span>
                                 </li>
-                                <li class="flex items-start gap-4">
-                                    <span class="font-bold text-gold-accent min-w-[160px] md:min-w-[200px] shrink-0">${t('comp_authority')}</span>
+                                <li class="flex flex-col md:flex-row md:items-start gap-1 md:gap-4">
+                                    <span class="font-bold text-gold-accent w-full md:w-auto md:min-w-[200px] shrink-0">${t('comp_authority')}</span>
                                     <span>${t('comp_authority_desc')}</span>
                                 </li>
-                                <li class="flex items-start gap-4">
-                                    <span class="font-bold text-slate-500 min-w-[160px] md:min-w-[200px] shrink-0">${t('comp_amanah')}</span>
+                                <li class="flex flex-col md:flex-row md:items-start gap-1 md:gap-4">
+                                    <span class="font-bold text-slate-500 w-full md:w-auto md:min-w-[200px] shrink-0">${t('comp_amanah')}</span>
                                     <span>${t('comp_amanah_desc')}</span>
                                 </li>
-                                <li class="flex items-start gap-4">
-                                    <span class="font-bold text-slate-500 min-w-[160px] md:min-w-[200px] shrink-0">${t('comp_gre')}</span>
+                                <li class="flex flex-col md:flex-row md:items-start gap-1 md:gap-4">
+                                    <span class="font-bold text-slate-500 w-full md:w-auto md:min-w-[200px] shrink-0">${t('comp_gre')}</span>
                                     <span>${t('comp_gre_desc')}</span>
                                 </li>                       
                             </ul>
