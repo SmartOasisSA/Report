@@ -148,6 +148,14 @@
 
     <!-- Sidebar Navigation -->
     <aside id="sidebar" class="bg-saudi-green text-white w-64 space-y-6 py-4 px-2 absolute inset-y-0 left-0 transform -translate-x-full lg:relative lg:translate-x-0 transition duration-300 ease-in-out z-40 h-full flex flex-col pt-20 lg:pt-6 shadow-2xl lg:shadow-none border-r border-saudi-green-light/30">
+        
+        <!-- Back Link (Top of Sidebar) -->
+        <div class="px-4 mb-2">
+            <a href="https://smart-oasis-base.super.site/basics-research" class="flex items-center text-xs font-bold text-saudi-green-light bg-black/20 hover:bg-black/30 hover:text-white px-3 py-2 rounded-lg transition-colors border border-white/5">
+                <span data-i18n="nav_back">← 返回知识库</span>
+            </a>
+        </div>
+
         <div class="px-4 mb-6 hidden lg:block">
             <div class="flex items-center gap-3 mb-2">
                 <div class="h-10 w-10 bg-white/10 rounded-lg text-gold-accent flex items-center justify-center font-bold text-xl shadow-lg border border-gold-accent/40 backdrop-blur-sm">S</div>
@@ -190,7 +198,7 @@
         </div>
 
         <div class="p-4 text-[10px] text-sand-200/60 border-t border-white/10">
-            <p>Version 2.3 | Dec 2025</p>
+            <p>Version 2.4 | Dec 2025</p>
             <p class="font-mono mt-1">INTERNAL USE ONLY</p>
         </div>
     </aside>
@@ -469,6 +477,7 @@
         const translations = {
             zh: {
                 kb_subtitle: "知识库",
+                nav_back: "← 返回知识库",
                 nav_dashboard: "生态全景图",
                 nav_workflow: "业务流程",
                 nav_directory: "机构百科全书",
@@ -489,7 +498,7 @@
                 comp_amanah: "执行层 (Amanah / 市政署):",
                 comp_amanah_desc: "沙特没有“省房管局”，地方上的具体执行（如发施工证、修路、收垃圾）全部由各城市的 Amanah 负责。",
                 comp_gre: "G.R.E.s (国家队):",
-                comp_gre_desc: "类似中国的央企（如中建、中铁），但在沙特，它们承担了部分“政府职能”，如国家住房公司（NHC）。",
+                comp_gre_desc: "类似中国的央企（如中建、中铁），但在沙特，它们承担了部分“政府职能”，如国家住房公司（NHC），既是我们的竞争对手，也可能是最大的合作伙伴。",
 
                 tree_king: "国王 / 内阁",
                 tree_momah_role: "房地产最高主管部门",
@@ -533,6 +542,7 @@
             },
             en: {
                 kb_subtitle: "Knowledge Base",
+                nav_back: "← Back to Basics & Research",
                 nav_dashboard: "Ecosystem Panorama",
                 nav_workflow: "Workflow Guide",
                 nav_directory: "Encyclopedia",
@@ -1360,4 +1370,3 @@
     </script>
 </body>
 </html>
-
