@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Oasis - Property Upgrade & Management Experts</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans', sans-serif;
+            background-color: #f3f4f6;
+        }
+        .gradient-text {
+            background: linear-gradient(135deg, #059669 0%, #10b981 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .hero-bg {
+            background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1502005229762-cf1b2da7c5d6?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');
+            background-size: cover;
+            background-position: center;
+        }
+        /* Hide scrollbar for cleaner look */
+        ::-webkit-scrollbar {
+            width: 0px;
+            background: transparent;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen flex justify-center">
+
+    <!-- Mobile Container (Max width constraint to simulate phone on desktop) -->
+    <div class="w-full max-w-md bg-white shadow-2xl min-h-screen relative overflow-hidden">
+        
+        <!-- 1. Hero Section: The Hook -->
+        <header class="hero-bg h-[500px] flex flex-col justify-end p-6 relative">
+            <div class="absolute top-6 left-6">
+                <div class="flex items-center space-x-2">
+                    <div class="w-8 h-8 bg-emerald-500 rounded-lg flex items-center justify-center">
+                        <i data-lucide="leaf" class="text-white w-5 h-5"></i>
+                    </div>
+                    <span class="text-white font-bold text-lg tracking-wider">SMART OASIS</span>
+                </div>
+            </div>
+            
+            <div class="mb-8 animate-fade-in-up">
+                <span class="bg-emerald-500 text-white text-xs px-3 py-1 rounded-full uppercase tracking-wide font-semibold mb-3 inline-block">Exclusive Owner Model</span>
+                <h1 class="text-4xl font-bold text-white leading-tight mb-2">
+                    Upgrade Property<br>
+                    Automate Income
+                </h1>
+                <p class="text-gray-200 text-sm mb-4">
+                    One-Stop <span class="text-emerald-300 font-bold">Renovation</span> + <span class="text-emerald-300 font-bold">Management</span>
+                </p>
+                <div class="h-1 w-20 bg-emerald-500 rounded"></div>
+            </div>
+        </header>
+
+        <!-- 2. The Pain Points (Why us?) -->
+        <section class="py-10 px-6 bg-white">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">As a Landlord,<br>Do You Face These Issues?</h2>
+            
+            <div class="grid grid-cols-2 gap-4">
+                <div class="bg-gray-50 p-4 rounded-xl text-center border border-gray-100">
+                    <div class="bg-red-100 w-10 h-10 rounded-full flex items-center justify-center mx-auto mb-3">
+                        <i data-lucide="frown" class="text-red-500 w-5 h-5"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-700 text-sm">Outdated Decor</h3>
+                    <p class="text-xs text-gray-500 mt-1">Low Rent Potential</p>
+                </div>
+                <div class="bg-gray-50 p-4 rounded-xl text-center border border-gray-100">
+                    <div class="bg-red-100 w-10 h-10 rounded-full flex items-center justify-center mx-auto mb-3">
+                        <i data-lucide="clock" class="text-red-500 w-5 h-5"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-700 text-sm">High Vacancy</h3>
+                    <p class="text-xs text-gray-500 mt-1">Hard to Find Tenants</p>
+                </div>
+                <div class="bg-gray-50 p-4 rounded-xl text-center border border-gray-100">
+                    <div class="bg-red-100 w-10 h-10 rounded-full flex items-center justify-center mx-auto mb-3">
+                        <i data-lucide="wrench" class="text-red-500 w-5 h-5"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-700 text-sm">Tedious Repairs</h3>
+                    <p class="text-xs text-gray-500 mt-1">Late Night Calls</p>
+                </div>
+                <div class="bg-gray-50 p-4 rounded-xl text-center border border-gray-100">
+                    <div class="bg-red-100 w-10 h-10 rounded-full flex items-center justify-center mx-auto mb-3">
+                        <i data-lucide="bar-chart-2" class="text-red-500 w-5 h-5"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-700 text-sm">Unstable Income</h3>
+                    <p class="text-xs text-gray-500 mt-1">Frequent Turnover</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. Our Solution (Two Core Pillars) -->
+        <section class="bg-emerald-50 py-12 px-6 rounded-t-[3rem] -mt-6 relative z-10">
+            <div class="text-center mb-10">
+                <span class="text-emerald-600 font-bold tracking-widest text-xs uppercase">Solution</span>
+                <h2 class="text-3xl font-bold text-gray-800 mt-2">Smart Oasis<br>Full-Service Solution</h2>
+            </div>
+
+            <!-- Part A: Renovation -->
+            <div class="bg-white rounded-2xl shadow-lg overflow-hidden mb-8">
+                <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Renovation" class="w-full h-40 object-cover">
+                <div class="p-6">
+                    <div class="flex items-center mb-3">
+                        <div class="bg-emerald-100 p-2 rounded-lg mr-3">
+                            <i data-lucide="hammer" class="text-emerald-600 w-5 h-5"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800">01. Quality Renovation</h3>
+                    </div>
+                    <ul class="space-y-3">
+                        <li class="flex items-start">
+                            <i data-lucide="check-circle" class="text-emerald-500 w-4 h-4 mt-1 mr-2 flex-shrink-0"></i>
+                            <span class="text-gray-600 text-sm"><b>Pro Design:</b> Modern styles targeting young professionals.</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i data-lucide="check-circle" class="text-emerald-500 w-4 h-4 mt-1 mr-2 flex-shrink-0"></i>
+                            <span class="text-gray-600 text-sm"><b>Cost Control:</b> Supply chain sourcing, saving 20% vs market.</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i data-lucide="check-circle" class="text-emerald-500 w-4 h-4 mt-1 mr-2 flex-shrink-0"></i>
+                            <span class="text-gray-600 text-sm"><b>Asset Value:</b> Revamped home, rent premium up 30%+.</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Part B: Management -->
+            <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+                <img src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Management" class="w-full h-40 object-cover">
+                <div class="p-6">
+                    <div class="flex items-center mb-3">
+                        <div class="bg-emerald-100 p-2 rounded-lg mr-3">
+                            <i data-lucide="settings" class="text-emerald-600 w-5 h-5"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800">02. Smart Operations</h3>
+                    </div>
+                    <ul class="space-y-3">
+                        <li class="flex items-start">
+                            <i data-lucide="check-circle" class="text-emerald-500 w-4 h-4 mt-1 mr-2 flex-shrink-0"></i>
+                            <span class="text-gray-600 text-sm"><b>Fast Leasing:</b> Multi-channel marketing to minimize vacancy.</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i data-lucide="check-circle" class="text-emerald-500 w-4 h-4 mt-1 mr-2 flex-shrink-0"></i>
+                            <span class="text-gray-600 text-sm"><b>Butler Service:</b> Tenant screening, cleaning, & repairs handled.</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i data-lucide="check-circle" class="text-emerald-500 w-4 h-4 mt-1 mr-2 flex-shrink-0"></i>
+                            <span class="text-gray-600 text-sm"><b>Transparent Reports:</b> View earnings in real-time on mobile.</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. Comparison Table -->
+        <section class="py-12 px-6 bg-white">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">Why Choose Us?</h2>
+            
+            <div class="overflow-hidden border border-gray-200 rounded-xl shadow-sm">
+                <table class="w-full text-sm">
+                    <thead>
+                        <tr class="bg-gray-50">
+                            <th class="p-3 text-left text-gray-500 font-medium">Feature</th>
+                            <th class="p-3 text-center text-gray-500 font-medium">Traditional</th>
+                            <th class="p-3 text-center text-emerald-600 font-bold bg-emerald-50">Smart Oasis</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-100">
+                        <tr>
+                            <td class="p-3 font-medium text-gray-700">Reno Cost</td>
+                            <td class="p-3 text-center text-gray-500">Expensive</td>
+                            <td class="p-3 text-center text-emerald-600 font-bold bg-emerald-50">Financed*</td>
+                        </tr>
+                        <tr>
+                            <td class="p-3 font-medium text-gray-700">Daily Mgmt</td>
+                            <td class="p-3 text-center text-gray-500">DIY</td>
+                            <td class="p-3 text-center text-emerald-600 font-bold bg-emerald-50">Hands-Free</td>
+                        </tr>
+                        <tr>
+                            <td class="p-3 font-medium text-gray-700">Tenant Quality</td>
+                            <td class="p-3 text-center text-gray-500">Inconsistent</td>
+                            <td class="p-3 text-center text-emerald-600 font-bold bg-emerald-50">Screened</td>
+                        </tr>
+                        <tr>
+                            <td class="p-3 font-medium text-gray-700">Condition</td>
+                            <td class="p-3 text-center text-gray-500">Depreciating</td>
+                            <td class="p-3 text-center text-emerald-600 font-bold bg-emerald-50">Maintained</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="text-xs text-gray-400 mt-2 text-center">*Consult manager for renovation financing details</p>
+        </section>
+
+        <!-- 5. Showcases / Testimonial -->
+        <section class="py-10 px-6 bg-gray-900 text-white">
+            <h2 class="text-2xl font-bold mb-6">Renovation Showcase</h2>
+            <div class="grid grid-cols-2 gap-3 mb-6">
+                <img src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" class="rounded-lg h-32 w-full object-cover">
+                <img src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" class="rounded-lg h-32 w-full object-cover">
+            </div>
+            <div class="bg-gray-800 p-4 rounded-xl border border-gray-700">
+                <div class="flex items-center mb-2">
+                    <div class="flex text-yellow-400">
+                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                    </div>
+                </div>
+                <p class="text-gray-300 text-sm italic">"I used to argue with tenants over small repairs. Now with Smart Oasis, the place looks great, rent is up, and I get paid on time. It's completely worry-free!"</p>
+                <p class="text-emerald-400 text-xs font-bold mt-3">— Mr. Wang, Property Owner</p>
+            </div>
+        </section>
+
+        <!-- 6. Footer / CTA -->
+        <section class="py-12 px-6 pb-24 bg-white text-center">
+            <h2 class="text-3xl font-bold text-gray-800 mb-2">Ready to Upgrade Your Asset?</h2>
+            <p class="text-gray-500 mb-8">Book a Free Property Assessment</p>
+            
+            <div class="bg-emerald-50 p-6 rounded-2xl inline-block w-full border-2 border-dashed border-emerald-200">
+                <div class="w-32 h-32 bg-white mx-auto mb-4 flex items-center justify-center rounded-lg shadow-sm">
+                    <!-- Placeholder QR Code -->
+                    <i data-lucide="qr-code" class="w-16 h-16 text-gray-800"></i>
+                </div>
+                <p class="font-bold text-gray-800">Long Press to Scan</p>
+                <p class="text-sm text-gray-500">Add Asset Manager on WeChat</p>
+            </div>
+        </section>
+
+        <!-- Sticky Bottom CTA Bar -->
+        <div class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-4 shadow-lg flex justify-center z-50 max-w-md mx-auto">
+            <button class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 px-8 rounded-full w-full shadow-emerald-200 shadow-lg flex items-center justify-center transition-all">
+                <i data-lucide="phone-call" class="w-5 h-5 mr-2"></i>
+                Contact Us
+            </button>
+        </div>
+
+    </div>
+
+    <script>
+        // Initialize Icons
+        lucide.createIcons();
+    </script>
+</body>
+</html>
